@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './stylesheets/login';
 
-const SignUpWidget = () => {
+class SignUpWidget extends React.Component {
   
  return ( 
    <form className="sign-up" onSubmit={handleSignUp}>
@@ -16,9 +16,4 @@ const SignUpWidget = () => {
    );
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <SignUpWidget />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+export defualt SignUpWidget;
