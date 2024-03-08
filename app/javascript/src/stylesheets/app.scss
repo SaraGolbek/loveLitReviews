@@ -1,0 +1,56 @@
+
+.img-header {
+  height: 300px;
+  width: 100%;
+  background-size: cover;
+}
+
+.login-img {
+  background-image: url("../img/img7.jpg");
+  background-position: center top 40%;
+  }
+
+.home-img {
+background-image: url("../img/img1.jpg");
+}
+
+.user-img {
+background-image: url("../img/img4.jpg");
+background-position: center bottom 40%;
+}
+
+.book-img {
+background-image: url("../img/img2.jpg");
+}
+
+.bookCover {
+  height: 220px;
+  width: 150px;
+}
+
+@media (min-width: 992px) {
+  .home-img {
+    height: 500px;
+    background-position: center bottom 40%;
+  }
+
+  .user-img {
+    height: 500px;
+    background-position: center bottom 20%;
+  }
+
+  .book-img {
+    height: 500px;
+    background-position: center bottom;
+  }
+}
+
+.description, .review {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.book-specific-ratings {
+  font-size: 17px;
+  font-weight: lighter;
+}
