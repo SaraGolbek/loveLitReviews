@@ -9,12 +9,12 @@ const LogInPage = () => {
   const [displaySignIn, setDisplaySignIn] = useState(true);
   const [displaySignUp, setDisplaySignUp] = useState(false);
 
-  const toggleDisplayProperties = () => {
+  const toggleDisplaySignIn = () => {
     setDisplaySignIn(true);
     setDisplaySignUp(false);
   };
 
-  const toggleDisplayBookings = () => {
+  const toggleDisplaySignUp = () => {
     setDisplaySignIn(false);
     setDisplaySignUp(true);
   };
@@ -27,8 +27,8 @@ const LogInPage = () => {
           <p>Join our passionate community of romance enthusiasts! Dive into the world of love, intrigue, and excitement with our unique platform where readers share their thoughts on the latest page-turners. Whether you're seeking heart-pounding tales or sizzling encounters, our users rate books based on overall enjoyment, captivating storytelling, writing style, and the delicious 'spiciness' factor. Join us and discover your next obsession in the realm of romance!</p>
         </div>
         <div className="col-4 mt-5">
-          {displaySignIn && <SignInWidget />}
-          {displaySignUp && <SignUpWidget />}
+          {displaySignIn && <SignInWidget onSignUpClick={toggleDisplaySignUp} />}
+          {displaySignUp && <SignUpWidget onSignInClick={toggleDisplaySignIn} />}
         </div>
       </div>
     </Layout>
@@ -41,3 +41,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(document.createElement('div')),
   )
 })
+
