@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './layout';
+import Layout from '@src/layout';
 import SignInWidget from './signInWidget';
 import SignUpWidget from './signUpWidget';
-import './stylesheets/login';
+import '@src/stylesheets/login';
 
 const LogInPage = () => {
   const [displaySignIn, setDisplaySignIn] = useState(true);
