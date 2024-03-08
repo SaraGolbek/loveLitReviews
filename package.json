@@ -1,6 +1,9 @@
 {
   "name": "love-lit-reviews",
   "private": true,
+  "engines": {
+    "node": "^16.17"
+  },
   "dependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/preset-react": "^7.23.3",
