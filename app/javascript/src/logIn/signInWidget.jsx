@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './stylesheets/login';
 
-class signInWidget extends React.Component {
+class SignInWidget extends React.Component {
   
   return (
     <form className="log-in" onSubmit={handleLogIn}>
