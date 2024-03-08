@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Layout from '@src/layout';
 import SignInWidget from './signInWidget';
 import SignUpWidget from './signUpWidget';
-import '@src/stylesheets/login';
+import './login.scss';
 
 const LogInPage = () => {
   const [displaySignIn, setDisplaySignIn] = useState(true);
