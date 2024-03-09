@@ -1,0 +1,14 @@
+.body {
+  background-image: url("../img/img8.jpg");
+  background-size: cover;
+  background-position: center top 20%;
+}
+
+.login-widgets, .welcome-message {
+  background-color: #ffffffe0;
+}
+
+.toggle-widget:hover {
+  cursor: pointer;
+  color: pink !important;
+}

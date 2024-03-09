@@ -56,7 +56,7 @@ const Home = () => (
                     <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
                   </li>
                 </ul>
-                <p className='review' style={{textIndent: "30px"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
+                <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
               </div>
             </div>
             <div className="row mb-4 w-100">
@@ -89,7 +89,7 @@ const Home = () => (
                       <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
                     </li>
                   </ul>
-                  <p className='review' style={{textIndent: "30px"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
+                  <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
               </div>
             </div>
             <div className="row mb-4 w-100">
@@ -122,7 +122,7 @@ const Home = () => (
                       <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
                     </li>
                   </ul>
-                  <p className='review' style={{textIndent: "30px"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
+                  <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
               </div>
             </div>
           </div>

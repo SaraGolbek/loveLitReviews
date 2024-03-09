@@ -27,7 +27,7 @@ const Book = () => (
                 <div className="col-8 col-md-9 d-flex flex-column p-4 pb-0 bg-white rounded shadow-sm">
                   <p className="mb-0"><h3 className="d-inline me-2">Book Title</h3>By <i>Author</i></p>
                   <p className="fw-light fst-italic">Categories: Romance, Historical, etc</p>
-                  <p className='mt-2 lead' style={{textIndent: "30px"}}>Book Description example: This book is about example example example example example example example example example example example example example example example example</p>
+                  <p className='mt-2 lead' style={{textIndent: "3em"}}>Book Description example: This book is about example example example example example example example example example example example example example example example example</p>
                   <p className="list-unstyled mt-auto mb-0 book-specific-ratings">
                    Google's Rating <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i><i className="fa-solid fa-star" style={{color: '#6c757d'}}></i><i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
                   </p>
@@ -66,7 +66,7 @@ const Book = () => (
             <div className="row mb-4 w-100">
                 <div className=" col-8 col-md-9 p-4 bg-white rounded shadow-sm">
                   <h3>User 1</h3>
-                  <p className='mt-2 lead' style={{textIndent: "30px"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
+                  <p className='mt-2 lead' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
                 </div>
                 <div className="col-4 col-md-3">
                   <div className="bg-white rounded shadow-sm p-4 h-100">

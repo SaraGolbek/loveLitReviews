@@ -1,1 +1,1 @@
-import 'src/loginPage';
+import '@src/logIn/loginPage';

@@ -1,17 +1,17 @@
 import React from 'react';
-import './stylesheets/login';
+import '@src/stylesheets/login';
 
 class SignUpWidget extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <form className="sign-up">
-          <h6 className="mb-3">Sign Up</h6>
-          <input type="text" className="inputwidth email" id="newemail" placeholder="Email"></input>
-          <input type="text" className="inputwidth username" id="newusername" placeholder="Username"></input>
-          <input type="password" className="inputwidth password" id="newpass" placeholder="Password"></input>
-          <p onClick={this.props.onSignInClick}>Have an Account? Sign In</p>
-          <button className="inputwidth" id="sign-up-btn">Sign Up</button>
+        <form className="log-in">
+          <h4 className="mb-4">Sign Up</h4>
+          <input type="email" className="username form-control  mb-3" id="usernameinput" placeholder="Email@Example.com"></input>
+          <input type="text" className="username form-control  mb-3" id="usernameinput" placeholder="Username"></input>
+          <input type="password" className="password form-control  mb-3" id="passinput" placeholder="Password"></input>
+          <p className="text-danger d-inline toggle-widget" onClick={this.props.onSignInClick}>No Account? Sign Up</p>
+          <button className="btn btn-danger d-inline float-end" id="log-in-btn">Sign In</button>
         </form>
       </React.Fragment>
     );
