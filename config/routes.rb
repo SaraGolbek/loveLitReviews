@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: "static_pages#loginPage"
   get 'home' => 'static_pages#home'
   get 'book/:id' => 'static_pages#book'
-  get 'profile/:username' => 'static_pages#profile'
+  get 'profile' => 'static_pages#profile'
   get 'loginPage' => 'static_pages#loginPage'
 
   namespace :api do
