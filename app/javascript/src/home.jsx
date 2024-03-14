@@ -12,14 +12,14 @@ const StarRating = ({ label, name, value, onChange }) => {
       {[...Array(5)].map((_, index) => (
         <React.Fragment key={index}>
           <input
-            id={`${name}-${index + 1}`}
+            id={`${name}-${5 - index}`}
             type="radio"
             name={name}
-            value={index + 1}
-            checked={value === index + 1}
+            value={5 - index}
+            checked={value === 5 - index}
             onChange={onChange}
           />
-          <label htmlFor={`${name}-${index + 1}`}><i className="fa-solid fa-star"></i></label>
+          <label htmlFor={`${name}-${5 - index}`}><i className="fa-solid fa-star"></i></label>
         </React.Fragment>
       ))}
       <p className="text-secondary pe-2">{label}</p>
@@ -100,6 +100,9 @@ const Home = () => {
 
   const reviewData = {
     book_id: selectedBook.id,
+    title: selectedBook.title,
+    author: selectedBook.authors.join(""),
+    thumbnail: selectedBook.cover,
     overall: overall,
     story: story,
     style: style,
@@ -194,21 +197,21 @@ const Home = () => {
               {reviews.map(review => (
               <div className="row mb-4 w-100 " key={review.id}>
               <div className=" col-12 p-4 bg-white rounded shadow-sm">
-                <a href="book" className="link-opacity-25-hover link-secondary text-decoration-none"><img src="" className="float-start bookCover rounded me-4"></img></a>
-                <h3 className="d-inline me-2"><a href="#" className="link-opacity-25-hover link-secondary text-decoration-none">{review.username}'s Review</a> of Book Title</h3>
-                <p className="d-inline">By <i>Author</i></p>
+                <a href="book" className="link-opacity-25-hover link-secondary text-decoration-none"><img src={review.thumbnail} className="float-start bookCover rounded me-4"></img></a>
+                <h3 className="d-inline me-2"><a href="#" className="link-opacity-25-hover link-secondary text-decoration-none">{review.username}'s Review</a> of {review.title}</h3>
+                <p className="d-inline">By <i>{review.author}</i></p>
                 <ul className="list-inline mt-1">
-                  <li className="list-inline-item">Overall
-                    {review.overall}
+                  <li className="list-inline-item">Overall:
+                     {review.overall}
                   </li>
-                  <li className="list-inline-item">Story
-                    {review.story}
+                  <li className="list-inline-item">Story:
+                     {review.story}
                   </li>
-                  <li className="list-inline-item">Style
-                    {review.style}
+                  <li className="list-inline-item">Style:
+                     {review.style}
                   </li>
-                  <li className="list-inline-item">Steam
-                    {review.steam}
+                  <li className="list-inline-item">Steam:
+                     {review.steam}
                   </li>
                 </ul>
                 <p className='review' style={{textIndent: "3em"}}>{review.comment}</p>

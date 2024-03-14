@@ -48,7 +48,7 @@ module Api
     private
 
     def review_params
-      params.require(:review).permit(:overall, :story, :style, :steam, :comment, :book_id)
+      params.require(:review).permit(:overall, :story, :style, :steam, :comment, :book_id, :title, :author, :thumbnail)
     end
   end
 end
