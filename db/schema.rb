@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_10_004913) do
+ActiveRecord::Schema.define(version: 2024_03_14_023628) do
 
   create_table "reviews", force: :cascade do |t|
     t.integer "overall"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2024_03_10_004913) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 

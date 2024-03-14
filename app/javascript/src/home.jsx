@@ -1,140 +1,232 @@
 // home.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '@src/layout';
-import exbook from '@src/img/exbook.jpg'
-import exbook2 from '@src/img/exbook2.jpg'
-import exbook3 from '@src/img/exbook3.jpg'
+import { safeCredentials, handleErrors } from '@src/utils/fetchHelper';
 
 import './stylesheets/app';
 
-const Home = () => (
-  <Layout>
-    <div className="row text-secondary">
-      <div className="col-12">
-        <div className="row">
-          <div className="home-img img-header w-100"></div>
-        </div>
-        <div className="row">
-          <div className="col-10 offset-1 col-xxl-8 offset-xxl-2">
-            <div className="row">
-              <div className="col-12 mt-4 mb-4 p-3 bg-white rounded shadow-sm">
-                <form className="row p-4">
-                  <div className="col-6 col-md-8 col-xl-10">
-                    <input type="text" className="form-control" placeholder="What are you reading?"/>
-                  </div>
-                  <div className="col-6 col-md-4 col-xl-2">
-                    <button className="btn btn-secondary ms-3">Add Review</button>
-                  </div>
-                </form>
+const StarRating = ({ label, name, value, onChange }) => {
+  return (
+    <div className="rating">
+      {[...Array(5)].map((_, index) => (
+        <React.Fragment key={index}>
+          <input
+            id={`${name}-${index + 1}`}
+            type="radio"
+            name={name}
+            value={index + 1}
+            checked={value === index + 1}
+            onChange={onChange}
+          />
+          <label htmlFor={`${name}-${index + 1}`}><i className="fa-solid fa-star"></i></label>
+        </React.Fragment>
+      ))}
+      <p className="text-secondary pe-2">{label}</p>
+    </div>
+  );
+};
+
+const Home = () => {
+  const [reviews, setReviews] = useState([]);
+  const [bookTitle, setBookTitle] = useState('');
+  const [bookList, setBookList] = useState([]);
+  const [selectedBook, setSelectedBook] = useState({});
+  const [ratings, setRatings] = useState({
+    overall: 0,
+    story: 0,
+    style: 0,
+    steam: 0,
+  });
+  const [comment, setComment] = useState('');
+  const [showReviewForm, setShowReviewForm] = useState(false);
+
+  const refreshHome = () => {
+    fetch('/api/reviews', safeCredentials({
+      method: 'GET',
+    }))
+      .then(handleErrors)
+      .then(data => {
+        setReviews(data.reviews);
+      })
+  };
+
+  useEffect(() => {
+    refreshHome();
+  }, []);
+
+  useEffect(() => {
+    if (showReviewForm) {
+      clearSearch();
+    }
+  }, [showReviewForm]);
+
+  const onBookTitleChange = (e) => {
+    setBookTitle(e.target.value);
+    if (bookTitle.length > 1) {
+      fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}+intitle&printType=books&key=#{GOOGLE_BOOKS_API_KEY}`)
+        .then(handleErrors)
+        .then(data => {
+          setBookList(data.items.slice(0, 5));
+        });
+    }
+  };
+
+  const onBookSelect = (e, book) => {
+    const reviewingBook = {
+      title: book.volumeInfo.title,
+      id: book.id,
+      authors: book.volumeInfo.authors,
+      cover: book.volumeInfo.imageLinks.thumbnail,
+    };
+    setSelectedBook(reviewingBook);
+    setShowReviewForm(true);
+  };
+
+  const onBookReviewStart = (e) => {
+    setShowReviewForm(true);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRatings(prevState => ({
+      ...prevState,
+      [name]: parseInt(value)
+    }));
+  };
+
+  const handleSubmit = (e) => {
+  const { overall, story, style, steam } = ratings;
+
+  const reviewData = {
+    book_id: selectedBook.id,
+    overall: overall,
+    story: story,
+    style: style,
+    steam: steam,
+    comment: comment,
+  };
+
+    fetch('/api/reviews', safeCredentials ({
+      method: 'POST',
+      body: JSON.stringify(reviewData)
+    }))
+    .then(handleErrors)
+    .then(data => {
+      console.log(data);
+      setRatings({
+        overall: 0,
+        story: 0,
+        style: 0,
+        steam: 0,
+      });
+      setComment('');
+    })
+  };
+
+  const clearSearch = () => {
+    setBookTitle('');
+    setBookList([]);
+  };
+
+  return (
+    <Layout>
+      <div className="row text-secondary">
+        <div className="col-12">
+          {/*------Header------ */}
+          <div className="row">
+            <div className="home-img img-header w-100"></div>
+          </div>
+          <div className="row">
+            <div className="col-10 offset-1 col-xxl-8 offset-xxl-2">
+              <div className="row">
+                <div className="col-12 mt-4 mb-4 p-3 bg-white rounded shadow-sm">
+                  {/*------Book Search------ */}
+                  <form className="row p-4">
+                    <div className="col-6 col-md-8 col-xl-10">
+                      <input type="text" className="form-control" onChange={(e) => onBookTitleChange(e)} placeholder="What book do you want to review?" />
+                      {bookList && (bookList.map((book, index) => (
+                        <div key={index} onClick={(e) => onBookSelect(e, book)} tabIndex={index} className="mt-3 searchItem">
+                          <div className="row">
+                            <div className="col-2">
+                              <div className="search-img" style={{ backgroundImage: `url(${book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : ''})` }} />
+                            </div>
+                            <div className="col-10 lh-sm"  >
+                              <p className="mb-0">{book.volumeInfo.title}</p>
+                              <p className="pt-0"><i>By: {book.volumeInfo.authors}</i></p>
+                            </div>
+                          </div>
+                        </div>)))}
+                      <div>
+                      </div>
+                    </div>
+                    <div className="col-6 col-md-4 col-xl-2">
+                      <button className="btn btn-secondary ms-2" onClick={onBookReviewStart}>Add Review</button>
+                      <button type="button" className="btn btn-secondary ms-4" onClick={clearSearch}>Cancel</button>
+                    </div>
+                  </form>
+                  {/*------Review Form------ */}
+                  {showReviewForm && (
+                    <div className='row'>
+                      <div className='col-12 col-md-7 col-lg-5 justify-content-center'>
+                        <div className='mb-4'>
+                          <img src={selectedBook.cover} alt={selectedBook.title} className='img-fluid rounded' />
+                          <h2>{selectedBook.title}</h2>
+                          <p><i>By: {selectedBook.authors}</i></p>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                          <StarRating label="How would you rate the book overall?" name="overall" value={ratings.overall} onChange={handleChange} />
+                          <StarRating label="How would you rate the book's story?" name="story" value={ratings.story} onChange={handleChange} />
+                          <StarRating label="How would you rate the book's style?" name="style" value={ratings.style} onChange={handleChange} />
+                          <StarRating label="How would you rate the book's steam?" name="steam" value={ratings.steam} onChange={handleChange} />
+                          <div className="form-floating">
+                            <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
+                            <label htmlFor="floatingTextarea">Comments</label>
+                          </div>
+                          <button type="submit" className="btn btn-primary mt-3">Submit Review</button>
+                        </form>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="row mb-4 w-100">
+              {/*------Review Posts------ */}
+              {reviews.map(review => (
+              <div className="row mb-4 w-100 " key={review.id}>
               <div className=" col-12 p-4 bg-white rounded shadow-sm">
-                <a href="book" className="link-opacity-25-hover link-secondary text-decoration-none"><img src={exbook} className="float-start bookCover rounded me-4"></img></a>
-                <h3 className="d-inline me-2"><a href="user" className="link-opacity-25-hover link-secondary text-decoration-none">User 1's Review</a> of Book Title</h3>
+                <a href="book" className="link-opacity-25-hover link-secondary text-decoration-none"><img src="" className="float-start bookCover rounded me-4"></img></a>
+                <h3 className="d-inline me-2"><a href="#" className="link-opacity-25-hover link-secondary text-decoration-none">{review.username}'s Review</a> of Book Title</h3>
                 <p className="d-inline">By <i>Author</i></p>
                 <ul className="list-inline mt-1">
                   <li className="list-inline-item">Overall
-                    <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
+                    {review.overall}
                   </li>
                   <li className="list-inline-item">Story
-                    <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
+                    {review.story}
                   </li>
                   <li className="list-inline-item">Style
-                    <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
+                    {review.style}
                   </li>
                   <li className="list-inline-item">Steam
-                    <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
+                    {review.steam}
                   </li>
                 </ul>
-                <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
+                <p className='review' style={{textIndent: "3em"}}>{review.comment}</p>
               </div>
             </div>
-            <div className="row mb-4 w-100">
-              <div className=" col-12 p-4 bg-white rounded shadow-sm">
-                <img src={exbook3} className="float-start bookCover rounded me-4"></img>
-                 <h3 className="d-inline me-2">User 2's Review of Book Title</h3>
-                    <p className="d-inline">By <i>Author</i></p>
-                  <ul className="list-inline mt-1">
-                    <li className="list-inline-item">Overall
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Story
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Style
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Steam
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                  </ul>
-                  <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
-              </div>
-            </div>
-            <div className="row mb-4 w-100">
-              <div className=" col-12 p-4 bg-white rounded shadow-sm">
-                <img src={exbook2} className="float-start bookCover rounded me-4"></img>
-                <h3 className="d-inline me-2"><a href="user" className="link-opacity-25-hover link-secondary text-decoration-none">User 1's Review</a> of Book Title</h3>
-                <p className="d-inline">By <i>Author</i></p>
-                  <ul className="list-inline mt-1">
-                    <li className="list-inline-item">Overall
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Story
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Style
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                    <li className="list-inline-item">Steam
-                      <i className="fa-solid fa-star ps-1" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                      <i className="fa-solid fa-star" style={{color: '#6c757d'}}></i>
-                    </li>
-                  </ul>
-                  <p className='review' style={{textIndent: "3em"}}>Book Review example: This book was example example example example example example example example example example example example example example example example</p>
-              </div>
+            ))}
             </div>
           </div>
         </div>
-       </div>
-    </div>
-  </Layout>
-)
+      </div>
+    </Layout>
+  );
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <Home />,
     document.body.appendChild(document.createElement('div')),
-  )
-})
+  );
+});
+

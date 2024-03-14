@@ -1,7 +1,6 @@
 // login page component
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Layout from '@src/layout';
 import { safeCredentials, handleErrors} from '@src/utils/fetchHelper';
 import SignInWidget from './signInWidget';
 import SignUpWidget from './signUpWidget';
