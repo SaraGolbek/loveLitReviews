@@ -45,6 +45,14 @@ module Api
       end
     end
 
+    def show
+      @review = Review.find_by(title: params[:title])
+      return render json: { error: 'not_found' }, status: :not_found unless @review
+
+      render 'api/reviews/show', status: :ok
+    end
+
+
     private
 
     def review_params

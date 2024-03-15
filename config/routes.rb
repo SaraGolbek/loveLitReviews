@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'static_pages#index'
 
   get 'home' => 'static_pages#home'
-  get 'book/:id' => 'static_pages#book'
+  get 'book/:book_id/:title' => 'static_pages#book'
   get 'profile' => 'static_pages#profile'
   get 'loginPage' => 'static_pages#loginPage'
 
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get  '/reviews'                 => 'reviews#index'
     delete '/reviews/:id'           => 'reviews#destroy'
     get  '/users/:username/reviews' => 'reviews#index_by_user'
+    get  '/book/:title'             => 'reviews#show'
   end
 
 end
