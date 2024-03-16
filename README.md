@@ -21,6 +21,7 @@ Another User Said:
 >The website looks really good so far. Then they listed a few styling changes such as font size, weight and style. They also suggested different spacing for each item as well and some color suggestions for the star ratings. They also helped me with how they though I could fix my issue that I had with the book specific page and what version of the book I should display. 
 
 ## Video Demo
+https://www.loom.com/share/fca13ef154a24b8e90e252f6c3ec09f7?sid=c64f8fd3-4d88-41f4-b288-d226df09c765
 
 ## Wire Frames
 ![LoveLitReviewsWireFrames](https://github.com/SaraGolbek/LoveLitReviews/assets/145944090/f7f351dd-f1e5-42e9-b90d-2dcd7fc42ca4)
