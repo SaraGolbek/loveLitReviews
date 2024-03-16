@@ -29,6 +29,7 @@ const Home = () => {
       .then(handleErrors)
       .then(data => {
         setReviews(data.reviews);
+        console.log(data.reviews);
       })
   };
 
@@ -178,8 +179,8 @@ const Home = () => {
               {reviews.map(review => (
               <div className="row mb-4 w-100 " key={review.id}>
               <div className=" col-12 p-4 bg-white rounded shadow-sm">
-                <a href={`book/${review.book_id}/${review.title}`} className="link-opacity-25-hover link-secondary text-decoration-none"><img src={review.thumbnail} className="float-start bookCover rounded me-4"></img></a>
-                <h3 className="d-inline me-2"><a href={`users/${review.username}/reviews`} className="link-opacity-25-hover link-secondary text-decoration-none">{review.username}'s Review</a> of {review.title}</h3>
+                <a href={`/book/${review.book_id}/${review.title}`} className="link-opacity-25-hover link-secondary text-decoration-none"><img src={review.thumbnail} className="float-start bookCover rounded me-4"></img></a>
+                <h3 className="d-inline me-2"><a href={`/userPage/${review.username}`} className="link-opacity-25-hover link-secondary text-decoration-none">{review.username}'s Review</a> of {review.title}</h3>
                 <p className="d-inline">By <i>{review.author}</i></p>
                 <ul className="list-inline mt-1">
                   <li className="list-inline-item">Overall: <StarReview value={review.overall} /></li>

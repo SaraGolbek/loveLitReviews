@@ -61,7 +61,7 @@ const LogInPage = () => {
       .then(handleErrors)
       .then(data => {
         console.log(data);
-        window.location.replace("/home");
+        handleLogIn(event);
       })
   };
 
@@ -80,8 +80,8 @@ const LogInPage = () => {
                 <p style={{textIndent: "3em"}}>Join our passionate community of romance enthusiasts! Dive into the world of love, intrigue, and excitement with our unique platform where readers share their thoughts on the latest page-turners. Whether you're seeking heart-pounding tales or sizzling encounters, our users rate books based on overall enjoyment, captivating storytelling, writing style, and the delicious 'spiciness' factor. Join us and discover your next obsession in the realm of romance!</p>
               </div>
               <div className="row mt-3  p-5 login-widgets rounded">
-                  {displaySignIn && <SignInWidget onSignUpClick={toggleDisplaySignUp} signIn={handleLogIn} setUsername={setUsername} setPassword={setPassword}/>}
-                  {displaySignUp && <SignUpWidget onSignInClick={toggleDisplaySignIn} signUp={handleSignUp} setNewUsername={setNewUsername} setNewEmail={setNewEmail} setNewPassword={setNewPassword}/>}
+                  {displaySignIn && <SignInWidget onSignUpClick={toggleDisplaySignUp} signIn={handleLogIn} setUsername={setUsername} setPassword={setPassword} />}
+                  {displaySignUp && <SignUpWidget onSignInClick={toggleDisplaySignIn} signUp={handleSignUp} setNewUsername={setNewUsername} setNewEmail={setNewEmail} setNewPassword={setNewPassword} />}
               </div>
             </div>
           </div>
