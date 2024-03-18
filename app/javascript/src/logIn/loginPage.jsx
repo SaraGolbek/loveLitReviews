@@ -1,17 +1,12 @@
 // login page component
+// login page component
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { safeCredentials, handleErrors} from '@src/utils/fetchHelper';
 import SignInWidget from './signInWidget';
 import SignUpWidget from './signUpWidget';
 import '@src/stylesheets/login';
 
 const LogInPage = () => {
-  const [newUsername, setNewUsername] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [displaySignIn, setDisplaySignIn] = useState(true);
   const [displaySignUp, setDisplaySignUp] = useState(false);
 
@@ -23,46 +18,6 @@ const LogInPage = () => {
   const toggleDisplaySignUp = () => {
     setDisplaySignIn(false);
     setDisplaySignUp(true);
-  };
-
-  const handleLogIn = (event) => {
-    event.preventDefault();
-
-    fetch('/api/sessions', safeCredentials ({
-      method: 'POST',
-      body: JSON.stringify({
-        user: {
-          username: username,
-          password: password,
-        }
-      })
-    }))
-      .then(handleErrors)
-      .then(data => {
-        console.log(data);
-        window.location.replace("/home");
-      })
-
-  }
-
-  const handleSignUp = (event) => {
-    event.preventDefault();
-
-    fetch('/api/users', safeCredentials({
-      method: 'POST',
-      body: JSON.stringify({
-        user: {
-          username: newUsername,
-          email: newEmail,
-          password: newPassword,
-        }
-      })
-    }))
-      .then(handleErrors)
-      .then(data => {
-        console.log(data);
-        handleLogIn(event);
-      })
   };
 
   return (
@@ -80,8 +35,8 @@ const LogInPage = () => {
                 <p style={{textIndent: "3em"}}>Join our passionate community of romance enthusiasts! Dive into the world of love, intrigue, and excitement with our unique platform where readers share their thoughts on the latest page-turners. Whether you're seeking heart-pounding tales or sizzling encounters, our users rate books based on overall enjoyment, captivating storytelling, writing style, and the delicious 'spiciness' factor. Join us and discover your next obsession in the realm of romance!</p>
               </div>
               <div className="row mt-3  p-5 login-widgets rounded">
-                  {displaySignIn && <SignInWidget onSignUpClick={toggleDisplaySignUp} signIn={handleLogIn} setUsername={setUsername} setPassword={setPassword} />}
-                  {displaySignUp && <SignUpWidget onSignInClick={toggleDisplaySignIn} signUp={handleSignUp} setNewUsername={setNewUsername} setNewEmail={setNewEmail} setNewPassword={setNewPassword} />}
+                  {displaySignIn && <SignInWidget onSignUpClick={toggleDisplaySignUp} />}
+                  {displaySignUp && <SignUpWidget onSignInClick={toggleDisplaySignIn} />}
               </div>
             </div>
           </div>

@@ -30,7 +30,6 @@ const Layout = (props) => {
               <ul className="navbar-nav">
                 <li><a className="nav-link" href="/home">Reviews</a></li>
                 <li><a className="nav-link" href="/profile">Bookshelf</a></li>
-                <li><a className="nav-link" href="/loginPage">Sign In</a></li>
                 <li><a className="nav-link" href="/loginPage" onClick={handleSignOut}>Sign Out</a></li>
               </ul>
             </div>
