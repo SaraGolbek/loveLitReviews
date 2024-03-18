@@ -46,10 +46,10 @@ const Home = () => {
   const onBookTitleChange = (e) => {
     setBookTitle(e.target.value);
     if (bookTitle.length > 1) {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}+intitle&printType=books&key=#{GOOGLE_BOOKS_API_KEY}`)
+      fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}+intitle:${bookTitle}&printType=books&key=#{GOOGLE_BOOKS_API_KEY}`)
         .then(handleErrors)
         .then(data => {
-          setBookList(data.items.slice(0, 5));
+          setBookList(data.items.slice(0, 10));
         });
     }
   };
