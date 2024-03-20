@@ -1,5 +1,4 @@
 // login page component
-// login page component
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import SignInWidget from './signInWidget';

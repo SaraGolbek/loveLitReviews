@@ -15,10 +15,8 @@ const SignInWidget = ({ onSignUpClick }) => {
     setPassword(event.target.value);
   };
 
-  const handleLogIn = (event) => {
-    event.preventDefault();
-
-    fetch('/api/sessions', safeCredentials ({
+  const handleLogin = () => {
+    fetch('/api/sessions', safeCredentials({
       method: 'POST',
       body: JSON.stringify({
         user: {
@@ -29,14 +27,18 @@ const SignInWidget = ({ onSignUpClick }) => {
     }))
       .then(handleErrors)
       .then(data => {
-        console.log(data);
-        window.location.replace("/home");
+        if (data.success) {
+          window.location.replace("/home");
+        }
       })
+      .catch(error => {
+        setError('Could not log in.');
+      });
+  };
 
-  }
   return (
     <React.Fragment>
-      <form className="log-in" onSubmit={handleLogIn}>
+      <form className="log-in" onSubmit={handleLogin}>
         <h4 className="mb-4">Sign In</h4>
         <input type="text" className="username form-control  mb-3" id="username" placeholder="Username" value={username} onChange={handleUsernameChange}></input>
         <input type="password" className="password form-control  mb-3" id="password" placeholder="Password" value={password} onChange={handlePasswordChange}></input>
