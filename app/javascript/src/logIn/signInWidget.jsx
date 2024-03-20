@@ -6,6 +6,7 @@ import '@src/stylesheets/login';
 const SignInWidget = ({ onSignUpClick }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
