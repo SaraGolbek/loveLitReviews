@@ -44,6 +44,7 @@ const SignInWidget = ({ onSignUpClick }) => {
         <input type="password" className="password form-control  mb-3" id="password" placeholder="Password" value={password} onChange={handlePasswordChange}></input>
         <p className="text-danger d-inline toggle-widget" onClick={onSignUpClick}>No Account? Sign Up</p>
         <button className="btn btn-danger d-inline float-end" id="log-in-btn">Sign In</button>
+        {error && <p className="text-danger">{error}</p>}
       </form>
     </React.Fragment>
   );

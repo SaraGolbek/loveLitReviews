@@ -70,7 +70,7 @@ const [username, setUsername] = useState('');
 
   return (
     <React.Fragment>
-      <form className="log-in" onClick={handleSignUp}>
+      <form className="log-in" onSubmit={handleSignUp}>
         <h4 className="mb-4">Sign Up</h4>
         <input type="email" className="username form-control  mb-3" id="email" placeholder="Email@Example.com" value={email} onChange={handleEmailChange}></input>
         <input type="text" className="username form-control  mb-3" id="username" placeholder="Username" value={username} onChange={handleUsernameChange}></input>
