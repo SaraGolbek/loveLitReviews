@@ -16,7 +16,9 @@ const SignInWidget = ({ onSignUpClick }) => {
     setPassword(event.target.value);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    if (e) { e.preventDefault(); }
+    setError('');
     fetch('/api/sessions', safeCredentials({
       method: 'POST',
       body: JSON.stringify({

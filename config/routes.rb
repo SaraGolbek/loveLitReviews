@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Redirect root to home if user is logged in, otherwise to login page
   #root 'static_pages#loginPage'
-  root 'static_pages#index'
+  root 'static_pages#loginPage'
 
   get '/home' => 'static_pages#home'
   get '/book/:book_id/:title' => 'static_pages#book'
