@@ -4,6 +4,7 @@ import { safeCredentials, handleErrors} from '@src/utils/fetchHelper';
 
 const Layout = (props) => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // Added loading state
 
   const checkAuthenticated = () => {
     fetch('/api/authenticated')
@@ -13,6 +14,9 @@ const Layout = (props) => {
       })
       .catch(error => {
         console.error('Error checking authentication:', error);
+      })
+      .finally(() => {
+        setLoading(false); // Update loading state after AJAX call completes
       });
   };
 
@@ -58,17 +62,18 @@ const Layout = (props) => {
             </div>
           </div>
         </nav>
-        {authenticated ? (
-        <div className="container-fluid bg-light w-100 body flex-grow-1">
-          {props.children}
-        </div>
-        ) : (
+        {!loading && !authenticated && ( // Render error message only when not loading and not authenticated
           <div className="container-fluid bg-light flex-grow-1 d-flex w-100">
             <div className="row align-items-center justify-content-center w-100">
               <div className="col-6 rounded border shadow-sm text-center"><h3>Oops! You are not logged in. Please <a className="text-danger" href="/loginPage">Sign In</a> to continue.</h3></div>
             </div>
           </div>
-          )}
+        )}
+        {authenticated && ( // Render children only when authenticated
+          <div className="container-fluid bg-light w-100 body flex-grow-1">
+            {props.children}
+          </div>
+        )}
         <footer className="p-3">
           <div className="container">
             <span className="me-3 text-secondary">Built by <a href="https://app.netlify.com/sites/saragolbekportfolio/overview" target="_blank" rel="noopener noreferrer">Sara Golbek</a> with ☕ and 🐰</span>
