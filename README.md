@@ -1,16 +1,27 @@
-# LoveLitReviews README
+# LoveLitReviews: A Social Media Platform for Book Enthusiasts
 
 ![collage](https://github.com/SaraGolbek/LoveLitReviews/assets/145944090/0167f3c8-8dac-4085-81a9-7ef7e57d15f1)
 
+##Overview
+LoveLitReviews is a social media site designed for book lovers to share, rate, and review the books they read. Users can search for books using the Google Books API, write reviews, and view ratings. The platform features user portfolios, personalized book feeds, and book-specific pages, fostering a community of readers.
+
 ## Technologies Used
-I added bootstrap and font awesome gems to my project. 
-I also utilized the google books api to retrieve book information.
+Front-end: HTML, Sass, React JSX, Bootstrap, Font Awesome
+Back-end: Ruby on Rails, Node.js
+API Integration: Google Books API for retrieving book information
 
 ## General Approach
-I started with the frontend portion of the website and created a general layout of what I wanted. Once that was complete I worked on the models and controllers. Then I started working on page by page. I started with the sign in and sign up page adding in widgets incase I needed them later for singing in and signing up. Once I was able to make a user and sign in, I worked on the book reviews feed page, again making widgest for the star ratings, knowing I needed that for more pagees. I then continues onto the book specific page and then the user page and then last I worked on the profile page. For each page I would create the fetch requests and console log the data to make sure that I was getting what I needed and then mapping that information out onto the page for the user to see. 
+1. Front-end Development: Created a general layout and designed the user interface with responsive styling using Sass and Bootstrap.
+2. Back-end Implementation: Developed models and controllers to handle user authentication, book reviews, and data management.
+3. Page-by-Page Development:
+    - Sign-in/Sign-up Pages: Implemented authentication functionality with reusable widgets for future scalability.
+    - Book Reviews Feed: Designed dynamic widgets for features like star ratings and mapped API data to create an interactive feed.
+    - Book-Specific Page: Addressed challenges with displaying multiple versions of the same book by utilizing Google Books API’s ID-based search.
+    - User and Profile Pages: Enabled portfolio creation and seamless data retrieval for personalized user experiences.
+4. Testing and Debugging: Verified API fetch requests and used console logs to ensure data integrity before rendering information for users.
 
 ## Instalation Instructions
-You shouldn't have to install anything for the website to work. 
+No installation is required. The website is fully functional upon access.
 
 ## User Stories
 
