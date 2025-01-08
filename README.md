@@ -20,9 +20,6 @@ LoveLitReviews is a social media site designed for book lovers to share, rate, a
     - User and Profile Pages: Enabled portfolio creation and seamless data retrieval for personalized user experiences.
 4. Testing and Debugging: Verified API fetch requests and used console logs to ensure data integrity before rendering information for users.
 
-## Instalation Instructions
-No installation is required. The website is fully functional upon access.
-
 ## User Stories
 - Navigation Improvement: Updated navigation bar placement to enhance accessibility and user experience.
 - Search Enhancements: Added dropdown lists for book titles and images in the search bar, allowing users to select books based on visual cues.
