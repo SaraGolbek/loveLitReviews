@@ -6,7 +6,7 @@
 LoveLitReviews is a social media site designed for book lovers to share, rate, and review the books they read. Users can search for books using the Google Books API, write reviews, and view ratings. The platform features user portfolios, personalized book feeds, and book-specific pages, fostering a community of readers.
 
 ## Technologies Used
-- Front-end: HTML, Sass, Ruby, Bootstrap, Font Awesome
+- Front-end: HTML, Sass, React JS, Bootstrap, Font Awesome
 - Back-end: Ruby on Rails, Node.js
 - API Integration: Google Books API for retrieving book information
 
