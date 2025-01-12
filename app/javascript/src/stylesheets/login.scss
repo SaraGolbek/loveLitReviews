@@ -1,14 +1,27 @@
+// Variables
+$body-bg-image: "../img/img8.jpg";
+$body-bg-position: center top 20%;
+$body-bg-size: cover;
+$widget-bg-color: rgba(255, 255, 255, 0.88); // Equivalent to #ffffffe0
+$toggle-hover-color: pink;
+
+// Body Styles
 .body {
-  background-image: url("../img/img8.jpg");
-  background-size: cover;
-  background-position: center top 20%;
+  background-image: url($body-bg-image);
+  background-size: $body-bg-size;
+  background-position: $body-bg-position;
 }
 
-.login-widgets, .welcome-message {
-  background-color: #ffffffe0;
+// Widgets and Welcome Message
+.login-widgets,
+.welcome-message {
+  background-color: $widget-bg-color;
 }
 
-.toggle-widget:hover {
-  cursor: pointer;
-  color: pink !important;
+// Toggle Widget Styles
+.toggle-widget {
+  &:hover {
+    cursor: pointer;
+    color: $toggle-hover-color !important;
+  }
 }
