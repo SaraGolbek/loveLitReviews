@@ -1,0 +1,26 @@
+name: Bundle Install
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+      - name: Install Dependencies
+        run: |
+          bundle install
+      - name: Commit Updated Gemfile.lock
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add Gemfile.lock
+          git commit -m "Update Gemfile.lock"
+          git push
