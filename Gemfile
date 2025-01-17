@@ -43,6 +43,8 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Use sqlite3 as the database for development and test
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :test do
@@ -51,6 +53,8 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # Use sqlite3 as the database for development and test
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :production do
