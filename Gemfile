@@ -12,6 +12,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'font-awesome-sass', '~> 6.5.1'
 gem 'dotenv-rails' # Include in all environments
 gem 'rake', '~> 13.0' # Explicitly add rake
+gem 'activesupport', '~> 7.0'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
