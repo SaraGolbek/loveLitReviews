@@ -17,7 +17,7 @@ gem 'activesupport', '~> 7.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
-  gem 'sqlite3', '~> 1.4.2'
+  gem 'sqlite3', '~> 1.5'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
