@@ -10,6 +10,8 @@ module LoveLitReviews
   class Application < Rails::Application
     # Initialize configuration defaults for Rails 7
     config.load_defaults 7.0
+    # Configure the logger to output to STDOUT
+    config.logger = ActiveSupport::Logger.new($stdout)
 
     # Configure default headers to prevent caching
     config.action_dispatch.default_headers = {
