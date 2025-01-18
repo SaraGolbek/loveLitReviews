@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2' # Match Render's default Ruby version
 
-gem 'rails', '~> 7.0.7'
+gem 'rails', '>= 7.0.8.7' # Minimum version to ensure compatibility
 gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.0'
@@ -12,13 +12,14 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'font-awesome-sass', '~> 6.5.1'
 gem 'dotenv-rails' # Include in all environments
 gem 'rake', '~> 13.0' # Explicitly add rake
-gem 'activesupport', '~> 7.0'
+gem 'activesupport', '>= 7.0.8.7'
 
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootsnap', '>= 1.18.0', require: false
 
 group :development, :test do
+  gem 'rspec-rails'
   gem 'sqlite3', '~> 1.5'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug'
 end
 
 group :development do
@@ -35,7 +36,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '~> 1.3.3'
+  gem 'pg', '>= 1.4'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
