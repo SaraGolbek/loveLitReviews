@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.2' # Match Render's default Ruby version
 
 gem 'rails', '>= 7.0.8.7' # Minimum version to ensure compatibility
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 6.0'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.0'
 gem 'jbuilder', '~> 2.7'
