@@ -1,16 +1,12 @@
-// environment.js
-const { environment } = require('@rails/webpacker')
+const { environment } = require('@rails/webpacker');
+const path = require('path');
 
-const path = require('path')
-
-const customConfig = {
+environment.config.merge({
   resolve: {
     alias: {
       '@src': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
     }
   }
-}
+});
 
-environment.config.merge(customConfig);
-
-module.exports = environment
+module.exports = environment;
