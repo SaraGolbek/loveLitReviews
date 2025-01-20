@@ -1,0 +1,112 @@
+// Variables
+$header-height: 300px;
+$header-height-lg: 500px;
+$header-width: 100%;
+$rating-color-default: #ddd;
+$rating-color-active: #6c757d;
+$review-font-size: 20px;
+$review-font-weight: lighter;
+$book-cover-height: 220px;
+$book-cover-width: 150px;
+$search-height: 100px;
+$search-width: 75px;
+
+// Mixins
+@mixin header-image($image, $position: center center) {
+  background-image: url($image);
+  background-size: cover;
+  background-position: $position;
+}
+
+// Header Images
+.img-header {
+  height: $header-height;
+  width: $header-width;
+}
+
+.home-img {
+  @include header-image("../../images/home-background.jpg");
+}
+
+.user-img {
+  @include header-image("../img/img4.jpg", center bottom 40%);
+}
+
+.book-img {
+  @include header-image("../img/img2.jpg");
+}
+
+@media (min-width: 992px) {
+  .img-header {
+    height: $header-height-lg;
+  }
+
+  .home-img {
+    background-position: center bottom 40%;
+  }
+
+  .user-img {
+    background-position: center bottom 20%;
+  }
+
+  .book-img {
+    background-position: center bottom;
+  }
+}
+
+// Search Bar
+.search-img {
+  height: $search-height;
+  width: $search-width;
+  background-size: cover;
+}
+
+.searchItem {
+  &:focus {
+    background-color: lightgray;
+  }
+}
+
+// Rating Styles
+.rating {
+  color: $rating-color-default;
+  display: flex;
+  flex-direction: row-reverse;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  label {
+    &:hover,
+    input:checked ~ &,
+    &:hover ~ & {
+      color: $rating-color-active;
+    }
+  }
+}
+
+// Reviews Styles
+.bookCover {
+  height: $book-cover-height;
+  width: $book-cover-width;
+}
+
+.description,
+.review {
+  font-size: $review-font-size;
+  font-weight: $review-font-weight;
+}
+
+.book-specific-ratings {
+  font-size: 17px;
+  font-weight: $review-font-weight;
+}
+
+.reviewStars {
+  color: rgba($rating-color-active, 0.44); // Using 70% opacity
+}
+
+.active {
+  color: $rating-color-active;
+}
