@@ -73,18 +73,19 @@ $search-width: 75px;
   display: flex;
   flex-direction: row-reverse;
 
-  input[type="radio"] {
-    display: none;
-  }
-
   label {
+    cursor: pointer;
+    font-size: 2rem;
+    margin-right: 5px;
+
     &:hover,
-    input:checked ~ &,
-    &:hover ~ & {
+    &:hover ~ label,
+    &.active {
       color: $rating-color-active;
     }
   }
 }
+
 
 // Reviews Styles
 .bookCover {
@@ -104,9 +105,10 @@ $search-width: 75px;
 }
 
 .reviewStars {
-  color: rgba($rating-color-active, 0.44); // Using 70% opacity
-}
+  color: lightgray;
+  font-size: 1.5rem;
 
-.active {
-  color: $rating-color-active;
+  &.active {
+    color: darkgray;
+  }
 }

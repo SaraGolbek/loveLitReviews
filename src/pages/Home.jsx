@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import StarRating from '../components/starRater.jsx';
-import StarReview from '../components/starHelper.jsx';
+import StarRating from '../components/starrater.jsx';
+import StarReview from '../components/starhelper.jsx';
 
 const Home = () => {
     const [reviews, setReviews] = useState([]);
@@ -53,11 +53,10 @@ const Home = () => {
         setBookList([]);
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setRatings((prevState) => ({
-            ...prevState,
-            [name]: parseInt(value),
+    const handleRatingChange = (key, value) => {
+        setRatings((prevRatings) => ({
+            ...prevRatings,
+            [key]: value,
         }));
     };
 
@@ -163,30 +162,34 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit} className="col-12 col-sm-10 col-md-5">
-                                    <StarRating
-                                        label="How would you rate the book overall?"
-                                        name="overall"
-                                        value={ratings.overall}
-                                        onChange={handleChange}
-                                    />
-                                    <StarRating
-                                        label="How would you rate the book's story?"
-                                        name="story"
-                                        value={ratings.story}
-                                        onChange={handleChange}
-                                    />
-                                    <StarRating
-                                        label="How would you rate the book's style?"
-                                        name="style"
-                                        value={ratings.style}
-                                        onChange={handleChange}
-                                    />
-                                    <StarRating
-                                        label="How would you rate the book's steam?"
-                                        name="steam"
-                                        value={ratings.steam}
-                                        onChange={handleChange}
-                                    />
+                                    <div className="form-group">
+                                        <label>Overall Rating</label>
+                                        <StarRating
+                                            value={ratings.overall}
+                                            onChange={(value) => handleRatingChange('overall', value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Story Rating</label>
+                                        <StarRating
+                                            value={ratings.story}
+                                            onChange={(value) => handleRatingChange('story', value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Style Rating</label>
+                                        <StarRating
+                                            value={ratings.style}
+                                            onChange={(value) => handleRatingChange('style', value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Steam Rating</label>
+                                        <StarRating
+                                            value={ratings.steam}
+                                            onChange={(value) => handleRatingChange('steam', value)}
+                                        />
+                                    </div>
                                     <div className="form-floating">
                                         <textarea
                                             className="form-control"
@@ -194,13 +197,12 @@ const Home = () => {
                                             id="floatingTextarea"
                                             value={comment}
                                             onChange={(e) => setComment(e.target.value)}
-                                        />
+                                        ></textarea>
                                         <label htmlFor="floatingTextarea">Comments</label>
                                     </div>
-                                    <button type="submit" className="btn btn-primary mt-3">
-                                        Submit Review
-                                    </button>
+                                    <button type="submit" className="btn btn-primary mt-3">Submit Review</button>
                                 </form>
+
                             </div>
                         )}
 
@@ -215,11 +217,11 @@ const Home = () => {
                                     />
                                     <h3 className="d-inline me-2">{review.title}</h3>
                                     <p className="d-inline">
-                                        By <i>{review.author}</i>
+                                    By <i>{review.author}</i>
                                     </p>
                                     <ul className="list-inline mt-1">
                                         <li className="list-inline-item">
-                                            Overall: <StarReview value={review.overall} />
+                                            Overall: <StarReview value={review.overall}/>
                                         </li>
                                         <li className="list-inline-item">
                                             Story: <StarReview value={review.story} />
