@@ -33,7 +33,7 @@ $search-width: 75px;
 }
 
 .book-img {
-  @include header-image("../img/img2.jpg");
+  @include header-image("../images/book-background.jpg");
 }
 
 @media (min-width: 992px) {
@@ -70,13 +70,12 @@ $search-width: 75px;
 // Rating Styles
 .rating {
   color: $rating-color-default;
-  display: flex;
+  display: inline-flex;
   flex-direction: row-reverse;
 
   label {
     cursor: pointer;
-    font-size: 2rem;
-    margin-right: 5px;
+    font-size: 1.25rem;
 
     &:hover,
     &:hover ~ label,
@@ -94,6 +93,7 @@ $search-width: 75px;
 }
 
 .description,
+.review-question,
 .review {
   font-size: $review-font-size;
   font-weight: $review-font-weight;
@@ -106,7 +106,7 @@ $search-width: 75px;
 
 .reviewStars {
   color: lightgray;
-  font-size: 1.5rem;
+  font-size: 1rem;
 
   &.active {
     color: darkgray;

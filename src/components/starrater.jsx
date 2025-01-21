@@ -17,7 +17,7 @@ const StarRating = ({ maxStars = 5, value, onChange }) => {
                         onMouseLeave={() => setHoverIndex(0)}
                         onClick={() => onChange(starIndex)}
                     >
-                        ★
+                        <i className="fa-solid fa-star"></i>
                     </label>
                 );
             })}
