@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import StarReview from "../components/starHelper.jsx";
+import StarReview from "../components/StarHelper.jsx";
 
 const Book = () => {
     const { id } = useParams();

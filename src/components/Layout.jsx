@@ -1,9 +1,9 @@
 //layout.jsx
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
-const Layout = (props) => {
+const Layout = () => {
 
     return (
         <React.Fragment>
@@ -18,7 +18,8 @@ const Layout = (props) => {
                         </button>
                         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <ul className="navbar-nav">
-                                <li><Link className="nav-link" to="/">Reviews</Link></li>
+                                <li><Link className="nav-link" to="/home">Reviews</Link></li>
+                                <li><Link className="nav-link" to="/login">Sign In</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -26,7 +27,7 @@ const Layout = (props) => {
 
 
                 <div className="container-fluid bg-light w-100 body flex-grow-1">
-                    {props.children}
+                    <Outlet />
                 </div>
 
                 <footer className="p-3">
@@ -45,7 +46,7 @@ const Layout = (props) => {
     );
 }
 Layout.propTypes = {
-    children: PropTypes.node, // Accepts any valid React node as children
+    children: PropTypes.node,
 };
 
 export default Layout;

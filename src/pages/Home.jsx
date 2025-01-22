@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import StarRating from '../components/starrater.jsx';
-import StarReview from '../components/starhelper.jsx';
+import StarRating from '../components/StarRater.jsx';
+import StarReview from '../components/StarHelper.jsx';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
