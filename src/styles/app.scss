@@ -25,11 +25,11 @@ $search-width: 75px;
 }
 
 .home-img {
-  @include header-image("../../images/home-background.jpg");
+  @include header-image("../images/home-background.jpg");
 }
 
 .user-img {
-  @include header-image("../img/img4.jpg", center bottom 40%);
+  @include header-image("../images/profile-background.jpg");
 }
 
 .book-img {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import StarRating from '../components/starrater.jsx';
-import StarReview from '../components/starhelper.jsx';
+import StarRating from '../components/StarRater.jsx';
+import StarReview from '../components/StarHelper.jsx';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -75,7 +75,10 @@ const Home = () => {
 
         fetch('http://localhost:5000/api/reviews', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
             body: JSON.stringify(reviewData),
         })
             .then((response) => response.json())
@@ -87,6 +90,7 @@ const Home = () => {
             })
             .catch((error) => console.error('Error submitting review:', error));
     };
+
 
     const clearSearch = () => {
         setBookTitle('');
@@ -231,14 +235,18 @@ const Home = () => {
                             {[...reviews].reverse().map((review) => (
                                 <div className="row mb-4 w-100" key={review.id}>
                                     <div className="col-12 p-4 bg-white rounded shadow-sm">
-                                        <img
-                                            src={review.thumbnail}
-                                            className="float-start bookCover rounded me-4"
-                                            alt={review.title}
-                                        />
+                                        <Link to={`/books/${review.book_id}`}>
+                                            <img
+                                                src={review.thumbnail}
+                                                className="float-start bookCover rounded me-4"
+                                                alt={review.title}
+                                            />
+                                        </Link>
                                         <h3 className="d-inline me-2">
-                                            <Link to={`/books/${review.book_id}`} className="text-decoration-none text-secondary">
-                                            {review.title}
+                                            <Link to={`/profile/${review.username}`} className="text-decoration-none text-secondary">
+                                                {review.username}&#39;s
+                                                <span> Review of </span>
+                                                {review.title}
                                             </Link>
                                         </h3>
                                         <p className="d-inline">
