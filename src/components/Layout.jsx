@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { checkAuthenticated } from '../utils/auth';
 
+
 const Layout = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);

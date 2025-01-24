@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StarReview from "../components/StarHelper.jsx";
+import { API_BASE_URL } from '../utils/api';
 
 const Book = () => {
     const { id } = useParams();
@@ -43,7 +44,7 @@ const Book = () => {
             })
             .catch((err) => console.error("Error fetching book details:", err));
 
-        fetch(`http://localhost:5000/api/books/${id}`)
+        fetch(`${API_BASE_URL}/api/books/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.error) {

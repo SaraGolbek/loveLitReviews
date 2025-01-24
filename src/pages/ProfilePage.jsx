@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import StarReview from "../components/StarHelper.jsx";
+import { API_BASE_URL } from '../utils/api';
 
 const ProfilePage = () => {
     const { username } = useParams(); // Get the username from the URL
@@ -12,7 +13,7 @@ const ProfilePage = () => {
         const fetchUserReviews = async () => {
             const userToFetch = username || localStorage.getItem('username'); // Fallback to signed-in user
             try {
-                const response = await fetch(`http://localhost:5000/api/reviews/user/${userToFetch}`);
+                const response = await fetch(`${API_BASE_URL}/api/reviews/user/${userToFetch}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch user reviews');
                 }

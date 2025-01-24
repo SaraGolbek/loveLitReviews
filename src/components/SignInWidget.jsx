@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../styles/login.scss"
 import PropTypes from "prop-types";
+import { API_BASE_URL } from '../utils/api';
 
 const SignInWidget = ({ onSignInClick }) => {
     const [username, setUsername] = useState('');
@@ -11,7 +12,7 @@ const SignInWidget = ({ onSignInClick }) => {
         e.preventDefault();
         setError('');
         console.log('Attempting to log in with:', { username, password });
-        fetch('http://localhost:5000/api/login', {
+        fetch(`${API_BASE_URL}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),

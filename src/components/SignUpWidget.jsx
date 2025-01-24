@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../styles/login.scss"
 import PropTypes from "prop-types";
+import { API_BASE_URL } from '../utils/api';
 
 const SignUpWidget = ({ onSignUpClick }) => {
     const [username, setUsername] = useState('');
@@ -11,7 +12,7 @@ const SignUpWidget = ({ onSignUpClick }) => {
         e.preventDefault();
         setError('');
         console.log('Attempting to sign up with:', { username, password });
-        fetch('http://localhost:5000/api/signup', {
+        fetch(`${API_BASE_URL}/api/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),

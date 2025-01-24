@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StarRating from '../components/StarRater.jsx';
 import StarReview from '../components/StarHelper.jsx';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../utils/api';
 
 const Home = () => {
     const [reviews, setReviews] = useState([]);
@@ -20,7 +21,7 @@ const Home = () => {
     const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
     const refreshHome = () => {
-        fetch('http://localhost:5000/api/reviews')
+        fetch(`${API_BASE_URL}/api/reviews`)
             .then((response) => response.json())
             .then((data) => setReviews(data.reviews))
             .catch((error) => console.error('Error fetching reviews:', error));
@@ -73,7 +74,7 @@ const Home = () => {
             comment,
         };
 
-        fetch('http://localhost:5000/api/reviews', {
+        fetch(`${API_BASE_URL}/api/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
