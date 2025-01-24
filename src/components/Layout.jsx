@@ -20,20 +20,16 @@ const Layout = () => {
                     navigate('/login');
                 } else {
                     setAuthenticated(isAuthenticated);
-                    setLoading(false);
                 }
             } catch (error) {
                 console.error('Error checking authentication:', error);
-                setLoading(false);
+            } finally {
+                setLoading(false); // Ensure loading is set to false
             }
         };
 
         authenticate();
     }, [location.pathname, navigate]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
 
     return (
