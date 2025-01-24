@@ -11,18 +11,21 @@ const SignUpWidget = ({ onSignUpClick }) => {
     const handleSignUp = (e) => {
         e.preventDefault();
         setError('');
+        console.log('Attempting to sign up with:', { username, password });
         fetch(`${API_BASE_URL}/api/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
         })
             .then((res) => {
+                console.log('Sign-up response:', res);
                 if (!res.ok) {
                     throw new Error('Error creating account');
                 }
                 return res.json();
             })
-            .then(() => {
+            .then((data) => {
+                console.log('Sign-up successful, received data:', data);
                 onSignUpClick(); // Switch to Sign In
             })
             .catch((err) => {
