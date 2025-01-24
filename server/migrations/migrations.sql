@@ -7,6 +7,16 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL
     );
 
+-- Create books table
+CREATE TABLE books (
+   id VARCHAR(255) PRIMARY KEY,
+   title VARCHAR(255) NOT NULL,
+   author VARCHAR(255),
+   thumbnail TEXT,
+   description TEXT,
+   categories TEXT
+);
+
 -- Reviews Table
 CREATE TABLE IF NOT EXISTS reviews (
     id SERIAL PRIMARY KEY,
@@ -22,14 +32,4 @@ CREATE TABLE IF NOT EXISTS reviews (
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-
--- Create books table
-CREATE TABLE books (
-   id VARCHAR(255) PRIMARY KEY,
-   title VARCHAR(255) NOT NULL,
-   author VARCHAR(255),
-   thumbnail TEXT,
-   description TEXT,
-   categories TEXT
-);
 
