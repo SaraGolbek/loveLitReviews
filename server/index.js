@@ -132,6 +132,18 @@ app.post('/api/reviews', authenticateToken, async (req, res) => {
     }
 });
 
+// Get all reviews
+app.get('/api/reviews', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM reviews');
+        res.json({ reviews: result.rows });
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
+        res.status(500).json({ error: 'Failed to fetch reviews' });
+    }
+});
+
+
 app.get('/api/profile/:username', async (req, res) => {
     const { username } = req.params;
 
