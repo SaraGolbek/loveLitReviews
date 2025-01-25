@@ -11,27 +11,23 @@ const SignInWidget = ({ onSignInClick }) => {
     const handleLogin = (e) => {
         e.preventDefault();
         setError('');
-        console.log('Attempting to log in with:', { username, password });
         fetch(`${API_BASE_URL}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
         })
             .then((res) => {
-                console.log('Login response:', res);
                 if (!res.ok) {
                     throw new Error('Invalid username or password');
                 }
                 return res.json();
             })
             .then((data) => {
-                console.log('Login successful, received data:', data);
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('username', username);
                 window.location.replace('/');
             })
-            .catch((err) => {
-                console.error('Login failed:', err);
+            .catch(() => {
                 setError('Could not log in.');
             });
     };

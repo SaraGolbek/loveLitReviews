@@ -179,32 +179,32 @@ const Home = () => {
                                             <label className="review-question">How would you rate the book
                                                 overall?</label>
                                             <StarRating
-                                                value={ratings.overall}
-                                                onChange={(value) => handleRatingChange('overall', value)}
+                                                value={ratings.overall_rating}
+                                                onChange={(value) => handleRatingChange('overall_rating', value)}
                                             />
                                         </div>
                                         <div className="form-group mb-3 justify-content-between d-flex">
                                             <label className="review-question">How would you rate the book&#39;s
                                                 story?</label>
                                             <StarRating
-                                                value={ratings.story}
-                                                onChange={(value) => handleRatingChange('story', value)}
+                                                value={ratings.story_rating}
+                                                onChange={(value) => handleRatingChange('story_rating', value)}
                                             />
                                         </div>
                                         <div className="form-group mb-3 justify-content-between d-flex">
                                             <label className="review-question">How would you rate the book&#39;s
                                                 style?</label>
                                             <StarRating
-                                                value={ratings.style}
-                                                onChange={(value) => handleRatingChange('style', value)}
+                                                value={ratings.style_rating}
+                                                onChange={(value) => handleRatingChange('style_rating', value)}
                                             />
                                         </div>
                                         <div className="form-group mb-3 justify-content-between d-flex">
                                             <label className="review-question">How would you rate the book&#39;s
                                                 steam?</label>
                                             <StarRating
-                                                value={ratings.steam}
-                                                onChange={(value) => handleRatingChange('steam', value)}
+                                                value={ratings.steam_rating}
+                                                onChange={(value) => handleRatingChange('steam_rating', value)}
                                             />
                                         </div>
                                         <div className="form-floating">
@@ -234,7 +234,7 @@ const Home = () => {
 
                             {/* Review Posts */}
                             {[...reviews].reverse().map((review) => (
-                                <div className="row mb-4 w-100" key={review.id}>
+                                <div className="row mb-4 w-100" key={review.book_id}>
                                     <div className="col-12 p-4 bg-white rounded shadow-sm">
                                         <Link to={`/books/${review.book_id}`}>
                                             <img
