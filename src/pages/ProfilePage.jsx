@@ -13,7 +13,7 @@ const ProfilePage = () => {
         const fetchUserReviews = async () => {
             const userToFetch = username || localStorage.getItem('username'); // Fallback to signed-in user
             try {
-                const response = await fetch(`${API_BASE_URL}/api/reviews/user/${userToFetch}`);
+                const response = await fetch(`${API_BASE_URL}/api/reviews/profile/${userToFetch}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch user reviews');
                 }
