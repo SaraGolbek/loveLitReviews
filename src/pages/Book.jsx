@@ -8,29 +8,29 @@ const Book = () => {
     const [book, setBook] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [averageRatings, setAverageRatings] = useState({
-        overall: 0,
-        story: 0,
-        style: 0,
-        steam: 0,
+        overall_rating: 0,
+        story_rating: 0,
+        style_rating: 0,
+        steam_rating: 0,
     });
 
     const calculateAverageRatings = (reviewsData) => {
         const totalRatings = reviewsData.length;
         const sumRatings = reviewsData.reduce(
             (acc, review) => ({
-                overall: acc.overall + review.overall,
-                story: acc.story + review.story,
-                style: acc.style + review.style,
-                steam: acc.steam + review.steam,
+                overall_rating: acc.overall_rating + review.overall_rating,
+                story_rating: acc.story_rating + review.story_rating,
+                style_rating: acc.style_rating + review.style_rating,
+                steam_rating: acc.steam_rating + review.steam_rating,
             }),
-            { overall: 0, story: 0, style: 0, steam: 0 }
+            { overall_rating: 0, story_rating: 0, style_rating: 0, steam_rating: 0 }
         );
 
         setAverageRatings({
-            overall: totalRatings ? Math.round(sumRatings.overall / totalRatings) : 0,
-            story: totalRatings ? Math.round(sumRatings.story / totalRatings) : 0,
-            style: totalRatings ? Math.round(sumRatings.style / totalRatings) : 0,
-            steam: totalRatings ? Math.round(sumRatings.steam / totalRatings) : 0,
+            overall_rating: totalRatings ? Math.round(sumRatings.overall_rating / totalRatings) : 0,
+            story_rating: totalRatings ? Math.round(sumRatings.story_rating / totalRatings) : 0,
+            style_rating: totalRatings ? Math.round(sumRatings.style_rating / totalRatings) : 0,
+            steam_rating: totalRatings ? Math.round(sumRatings.steam_rating / totalRatings) : 0,
         });
     };
 
@@ -109,16 +109,16 @@ const Book = () => {
                                 Average LoveLitReviews:
                             </li>
                             <li className="list-inline-item pe-1">
-                                Overall: <StarReview value={averageRatings.overall}/>
+                                Overall: <StarReview value={averageRatings.overall_rating}/>
                             </li>
                             <li className="list-inline-item pe-1">
-                                Story: <StarReview value={averageRatings.story}/>
+                                Story: <StarReview value={averageRatings.story_rating}/>
                             </li>
                             <li className="list-inline-item pe-1">
-                                Style: <StarReview value={averageRatings.style}/>
+                                Style: <StarReview value={averageRatings.style_rating}/>
                             </li>
                             <li className="list-inline-item">
-                                Steam: <StarReview value={averageRatings.steam}/>
+                                Steam: <StarReview value={averageRatings.steam_rating}/>
                             </li>
                         </ul>
                     </div>
@@ -147,17 +147,17 @@ const Book = () => {
                                     className="mt-2 mt-lg-0 ms-lg-2 p-4 w-100 h-100 bg-white rounded shadow-sm">
                                     <div className="mb-1 d-inline d-lg-block lead">
                                         Overall: <StarReview
-                                        value={review.overall}/>
+                                        value={review.overall_rating}/>
                                     </div>
                                     <div className="mb-1 d-inline d-lg-block lead">
                                         Story: <StarReview
-                                        value={review.story}/>
+                                        value={review.story_rating}/>
                                     </div>
                                     <div className="mb-1 d-inline d-lg-block lead">
-                                        Style: <StarReview value={review.style}/>
+                                        Style: <StarReview value={review.style_rating}/>
                                     </div>
                                     <div className='d-inline d-lg-block lead'>
-                                        Steam: <StarReview value={review.steam}/>
+                                        Steam: <StarReview value={review.steam_rating}/>
                                     </div>
                                 </div>
                             </div>

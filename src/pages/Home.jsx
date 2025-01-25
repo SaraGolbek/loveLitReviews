@@ -10,10 +10,10 @@ const Home = () => {
     const [bookList, setBookList] = useState([]);
     const [selectedBook, setSelectedBook] = useState({});
     const [ratings, setRatings] = useState({
-        overall: 0,
-        story: 0,
-        style: 0,
-        steam: 0,
+        overall_rating: 0,
+        story_rating: 0,
+        style_rating: 0,
+        steam_rating: 0,
     });
     const [comment, setComment] = useState('');
     const [showReviewForm, setShowReviewForm] = useState(false);
@@ -86,7 +86,7 @@ const Home = () => {
             .then(() => {
                 refreshHome();
                 setShowReviewForm(false);
-                setRatings({ overall: 0, story: 0, style: 0, steam: 0 });
+                setRatings({ overall_rating: 0, story_rating: 0, style_rating: 0, steam_rating: 0 });
                 setComment('');
             })
             .catch((error) => console.error('Error submitting review:', error));
@@ -223,7 +223,7 @@ const Home = () => {
                                             className="btn btn-secondary mt-3 ms-3"
                                             onClick={() => {
                                                 setShowReviewForm(false);
-                                                setRatings({overall: 0, story: 0, style: 0, steam: 0});
+                                                setRatings({overall_rating: 0, story_rating: 0, style_rating: 0, steam_rating: 0});
                                                 setComment('');
                                             }}
                                         >Cancel
@@ -255,16 +255,16 @@ const Home = () => {
                                         </p>
                                         <ul className="list-inline mt-1">
                                             <li className="list-inline-item">
-                                                Overall: <StarReview value={review.overall}/>
+                                                Overall: <StarReview value={review.overall_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Story: <StarReview value={review.story}/>
+                                                Story: <StarReview value={review.story_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Style: <StarReview value={review.style}/>
+                                                Style: <StarReview value={review.style_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Steam: <StarReview value={review.steam}/>
+                                                Steam: <StarReview value={review.steam_rating}/>
                                             </li>
                                         </ul>
                                         <p className="review" style={{textIndent: '3em'}}>
