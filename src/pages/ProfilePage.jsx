@@ -69,16 +69,16 @@ const ProfilePage = () => {
                                         </p>
                                         <ul className="list-inline mt-1">
                                             <li className="list-inline-item">
-                                                Overall: <StarReview value={review.overall}/>
+                                                Overall: <StarReview value={review.overall_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Story: <StarReview value={review.story}/>
+                                                Story: <StarReview value={review.story_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Style: <StarReview value={review.style}/>
+                                                Style: <StarReview value={review.style_rating}/>
                                             </li>
                                             <li className="list-inline-item">
-                                                Steam: <StarReview value={review.steam}/>
+                                                Steam: <StarReview value={review.steam_rating}/>
                                             </li>
                                         </ul>
                                         <p className="review" style={{ textIndent: '3em' }}>

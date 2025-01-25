@@ -130,7 +130,7 @@ const Book = () => {
                     </div>
                 </div>
                 {reviews.length > 0 ? (
-                    reviews.map((review) => (
+                    [...reviews].reverse().map((review) => (
                         <div key={review.id} className="row mb-4 w-100">
                             <div className="col-12 col-lg-8 p-4 bg-white rounded shadow-sm">
                                 <h3>
