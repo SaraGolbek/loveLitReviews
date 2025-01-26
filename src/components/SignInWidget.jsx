@@ -11,6 +11,7 @@ const SignInWidget = ({ onSignInClick}) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            console.log('Attempting to log in with:', { username, password });
             const response = await fetch(`${API_BASE_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -18,7 +19,12 @@ const SignInWidget = ({ onSignInClick}) => {
                 credentials: 'include',
             });
 
-            if (!response.ok) throw new Error('Login failed');
+            if (!response.ok) {
+                console.error('Login failed with status:', response.status);
+                throw new Error('Login failed');
+            }
+
+            console.log('Login successful. Redirecting...');
             window.location.replace('/');
         } catch (error) {
             console.error('Error logging in:', error);

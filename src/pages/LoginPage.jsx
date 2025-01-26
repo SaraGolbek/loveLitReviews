@@ -1,51 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import SignInWidget from '../components/SignInWidget';
 import SignUpWidget from '../components/SignUpWidget';
-import { checkAuthenticated } from '../utils/auth';
 
 const LogInPage = () => {
     const [displaySignIn, setDisplaySignIn] = useState(true);
-    const [authenticated, setAuthenticated] = useState(false);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const authenticate = async () => {
-            try {
-                const { authenticated: isAuthenticated, username } = await checkAuthenticated();
-                console.log("Authentication status:", isAuthenticated);
-
-                if (isAuthenticated) {
-                    setAuthenticated(true);
-                    console.log("Authenticated user:", username);
-                } else {
-                    setAuthenticated(false);
-                    console.log("User is not authenticated.");
-                }
-            } catch (error) {
-                console.error('Error checking authentication:', error);
-            }
-        };
-
-        authenticate();
-    }, []);
-
 
     const toggleDisplaySignIn = () => setDisplaySignIn(true);
     const toggleDisplaySignUp = () => setDisplaySignIn(false);
 
-    const handleSignOut = async () => {
-        try {
-            await fetch('/api/logout', {
-                method: 'POST',
-                credentials: 'include',
-            });
-            setAuthenticated(false);
-            navigate('/login');
-        } catch (error) {
-            console.error('Error during sign-out:', error);
-        }
-    };
 
     return (
         <div className="d-flex flex-column min-vh-100 login-page">
@@ -61,25 +23,15 @@ const LogInPage = () => {
                                 captivating storytelling, writing style, and the delicious &#39;spiciness&#39; factor. Join us
                                 and discover your next obsession in the realm of romance!</p>
                         </div>
-                            {authenticated ? (
-                                <div className="row mt-3  p-5 login-widgets rounded">You are already Signed in! Do you want to go to:
-                                    <ul className="navbar-nav">
-                                        <li><a className="nav-link" href="/">Reviews</a></li>
-                                        {/*<li><a className="nav-link" href="/profile">Bookshelf</a></li>*/}
-                                        <li><a className="nav-link" href="/login" onClick={handleSignOut}>Sign Out</a></li>
-                                    </ul>
-                                </div>
-                            ) : (
-                                displaySignIn ? (
-                                    <div className="row mt-3 mb-5 p-5 login-widgets rounded">
-                                        <SignInWidget onSignInClick={toggleDisplaySignUp}/>
-                                    </div>
-                                ) : (
-                                    <div className="row mt-3 mb-5 p-5 login-widgets rounded">
-                                        <SignUpWidget onSignUpClick={toggleDisplaySignIn}/>
-                                    </div>
-                                )
-                            )}
+                        {displaySignIn ? (
+                            <div className="row mt-3 mb-5 p-5 login-widgets rounded">
+                                <SignInWidget onSignInClick={toggleDisplaySignUp}/>
+                            </div>
+                        ) : (
+                            <div className="row mt-3 mb-5 p-5 login-widgets rounded">
+                                <SignUpWidget onSignUpClick={toggleDisplaySignIn}/>
+                            </div>
+                        )}
                         <div className=" row spacer mt-5 mb-5"></div>
                     </div>
                 </div>

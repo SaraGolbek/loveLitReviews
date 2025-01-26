@@ -64,9 +64,9 @@ const Layout = () => {
             <div className="d-flex flex-column min-vh-100">
                 <nav className="navbar navbar-expand-md sticky-top navbar-light bg-white">
                     <div className="container-fluid">
-                        <a className="navbar-brand h3" href="#">
+                        <p className="navbar-brand h3">
                             L<i className="fa-regular fa-heart fa-xs"></i>veLitReviews
-                        </a>
+                        </p>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -100,9 +100,7 @@ const Layout = () => {
 
 
                 <div className="container-fluid bg-light w-100 body flex-grow-1">
-
-                        <Outlet />
-
+                    <Outlet />
                 </div>
 
                 <footer className="p-3">

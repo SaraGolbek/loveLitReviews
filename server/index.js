@@ -75,8 +75,23 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-app.get('/api/authenticated', authenticateToken, (req, res) => {
-    res.json({ authenticated: true, username: req.user.username });
+app.get('/api/authenticated', (req, res) => {
+    console.log('Authentication request received. Headers:', req.headers);
+
+    const token = req.cookies?.token;
+    if (!token) {
+        console.log('No token found in cookies.');
+        return res.status(401).json({ authenticated: false, username: null });
+    }
+
+    jwt.verify(token, process.env.VITE_SECRET_KEY, (err, user) => {
+        if (err) {
+            console.log('Token verification failed:', err);
+            return res.status(403).json({ authenticated: false, username: null });
+        }
+        console.log('Authentication successful for user:', user.username);
+        res.json({ authenticated: true, username: user.username });
+    });
 });
 
 app.post('/api/logout', (req, res) => {
