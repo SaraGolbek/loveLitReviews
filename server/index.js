@@ -67,16 +67,27 @@ app.post('/api/login', async (req, res) => {
     const user = await pool.query(`SELECT * FROM users WHERE username = $1`, [username]);
 
     if (!user.rows.length || !await bcrypt.compare(password, user.rows[0].password)) {
+        console.error('Invalid login attempt for:', username);
         return res.status(401).json({ error: 'Invalid username or password' });
     }
 
     const token = jwt.sign({ username: user.rows[0].username }, process.env.VITE_SECRET_KEY, { expiresIn: '1h' });
-    console.log(token);
-    console.log(user);
+
+    // Log for debugging
+    console.log('Generated token:', token);
+    console.log('User found:', user.rows[0]);
+
+    // Set cookies
     res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
     res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'Strict' });
+
+    // Log cookies set in response
+    console.log('Cookies set in response:');
+    console.log(res.getHeaders()['set-cookie']);
+
     res.json({ message: 'Login successful' });
 });
+
 
 
 app.get('/api/authenticated', (req, res) => {
