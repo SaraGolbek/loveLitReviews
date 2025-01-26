@@ -71,6 +71,8 @@ app.post('/api/login', async (req, res) => {
     }
 
     const token = jwt.sign({ username: user.rows[0].username }, process.env.VITE_SECRET_KEY, { expiresIn: '1h' });
+    console.log(token);
+    console.log(user);
     res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
     res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'Strict' });
     res.json({ message: 'Login successful' });
