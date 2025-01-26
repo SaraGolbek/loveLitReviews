@@ -15,21 +15,30 @@ const Layout = () => {
 
     useEffect(() => {
         const authenticate = async () => {
-            setLoading(true);
-            const { authenticated, username } = await checkAuthenticated();
-
-            if (!authenticated) {
-                navigate('/login');
-            } else {
-                setAuthenticated(true);
-                setCurrentUser(username); // Store the username in the state
+            if (location.pathname === '/login') {
+                setLoading(false); // Skip authentication check for the login page
+                return;
             }
 
-            setLoading(false);
+            try {
+                setLoading(true);
+                const { authenticated, username } = await checkAuthenticated();
+
+                if (!authenticated) {
+                    navigate('/login');
+                } else {
+                    setAuthenticated(true);
+                    setCurrentUser(username);
+                }
+            } catch (error) {
+                console.error('Error during authentication:', error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         authenticate();
-    }, [navigate, location]);
+    }, [navigate, location.pathname]);
 
     if (loading) {
         return <div>Loading...</div>;
