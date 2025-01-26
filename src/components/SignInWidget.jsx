@@ -25,8 +25,8 @@ const SignInWidget = ({ onSignInClick}) => {
             }
 
             console.log('Login successful. Redirecting...');
-            console.log(document.cookie); // Check for cookies immediately after login
-            //window.location.replace('/');
+            console.log(document.cookie);
+            window.location.replace('/');
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Could not log in. Please check your credentials.');
