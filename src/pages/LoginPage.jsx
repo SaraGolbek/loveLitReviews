@@ -12,8 +12,16 @@ const LogInPage = () => {
     useEffect(() => {
         const authenticate = async () => {
             try {
-                const isAuthenticated = await checkAuthenticated();
-                setAuthenticated(isAuthenticated);
+                const { authenticated: isAuthenticated, username } = await checkAuthenticated();
+                console.log("Authentication status:", isAuthenticated);
+
+                if (isAuthenticated) {
+                    setAuthenticated(true);
+                    console.log("Authenticated user:", username);
+                } else {
+                    setAuthenticated(false);
+                    console.log("User is not authenticated.");
+                }
             } catch (error) {
                 console.error('Error checking authentication:', error);
             }
@@ -21,6 +29,7 @@ const LogInPage = () => {
 
         authenticate();
     }, []);
+
 
     const toggleDisplaySignIn = () => setDisplaySignIn(true);
     const toggleDisplaySignUp = () => setDisplaySignIn(false);
