@@ -76,7 +76,7 @@ app.post('/api/login', async (req, res) => {
 
 
 app.get('/api/authenticated', (req, res) => {
-    console.log('Authentication request received. Headers:', req.headers);
+    console.log('Cookies received:', req.cookies);
 
     const token = req.cookies?.token;
     if (!token) {
@@ -86,13 +86,14 @@ app.get('/api/authenticated', (req, res) => {
 
     jwt.verify(token, process.env.VITE_SECRET_KEY, (err, user) => {
         if (err) {
-            console.log('Token verification failed:', err);
+            console.log('Token verification failed:', err.message);
             return res.status(403).json({ authenticated: false, username: null });
         }
-        console.log('Authentication successful for user:', user.username);
+        console.log('Token verified for user:', user.username);
         res.json({ authenticated: true, username: user.username });
     });
 });
+
 
 app.post('/api/logout', (req, res) => {
     res.clearCookie('token');
