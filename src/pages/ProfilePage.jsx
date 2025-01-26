@@ -13,7 +13,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const fetchUserReviews = async () => {
-            const userToFetch = username || currentUser; // Use current user if no username in URL
+            const userToFetch = username || currentUser;
+            console.log('Current User:', currentUser);
             try {
                 const response = await fetch(`${API_BASE_URL}/api/profile/${userToFetch}`, {
                     credentials: 'include',
