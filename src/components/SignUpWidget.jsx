@@ -23,7 +23,7 @@ const SignUpWidget = ({ onSignUpClick }) => {
                 return res.json();
             })
             .then(() => {
-                onSignUpClick(); // Switch to Sign In
+                onSignUpClick();
             })
             .catch(() => {
                 setError('Could not sign up.');

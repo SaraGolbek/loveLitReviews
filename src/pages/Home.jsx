@@ -21,7 +21,7 @@ const Home = () => {
     const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
     const refreshHome = () => {
-        fetch(`${API_BASE_URL}/api/reviews`)
+        fetch(`${API_BASE_URL}/api/reviews`, { credentials: 'include' })
             .then((response) => response.json())
             .then((data) => setReviews(data.reviews))
             .catch((error) => console.error('Error fetching reviews:', error));
@@ -76,10 +76,8 @@ const Home = () => {
 
         fetch(`${API_BASE_URL}/api/reviews`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', // Include cookies for authentication
             body: JSON.stringify(reviewData),
         })
             .then((response) => response.json())
@@ -91,7 +89,6 @@ const Home = () => {
             })
             .catch((error) => console.error('Error submitting review:', error));
     };
-
 
     const clearSearch = () => {
         setBookTitle('');

@@ -3,34 +3,29 @@ import "../styles/login.scss"
 import PropTypes from "prop-types";
 import { API_BASE_URL } from '../utils/api';
 
-const SignInWidget = ({ onSignInClick }) => {
+const SignInWidget = ({ onSignInClick}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        setError('');
-        fetch(`${API_BASE_URL}/api/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Invalid username or password');
-                }
-                return res.json();
-            })
-            .then((data) => {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('username', username);
-                window.location.replace('/');
-            })
-            .catch(() => {
-                setError('Could not log in.');
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include',
             });
+
+            if (!response.ok) throw new Error('Login failed');
+            window.location.replace('/');
+        } catch (error) {
+            console.error('Error logging in:', error);
+            setError('Could not log in. Please check your credentials.');
+        }
     };
+
 
     return (
         <form className="log-in" onSubmit={handleLogin}>

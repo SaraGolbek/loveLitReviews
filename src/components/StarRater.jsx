@@ -7,7 +7,7 @@ const StarRating = ({ maxStars = 5, value, onChange }) => {
     return (
         <div className="rating">
             {[...Array(maxStars)].map((_, index) => {
-                const starIndex = maxStars - index; // Reverse order for row-reverse styling
+                const starIndex = maxStars - index;
                 return (
                     <label
                         key={starIndex}

@@ -10,14 +10,13 @@ const LogInPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const authenticate = () => {
-            checkAuthenticated()
-                .then((isAuthenticated) => {
-                    setAuthenticated(isAuthenticated);
-                })
-                .catch((error) => {
-                    console.error('Error checking authentication:', error);
-                });
+        const authenticate = async () => {
+            try {
+                const isAuthenticated = await checkAuthenticated();
+                setAuthenticated(isAuthenticated);
+            } catch (error) {
+                console.error('Error checking authentication:', error);
+            }
         };
 
         authenticate();
@@ -26,10 +25,17 @@ const LogInPage = () => {
     const toggleDisplaySignIn = () => setDisplaySignIn(true);
     const toggleDisplaySignUp = () => setDisplaySignIn(false);
 
-    const handleSignOut = () => {
-        localStorage.removeItem('token');
-        setAuthenticated(false);
-        navigate('/login');
+    const handleSignOut = async () => {
+        try {
+            await fetch('/api/logout', {
+                method: 'POST',
+                credentials: 'include',
+            });
+            setAuthenticated(false);
+            navigate('/login');
+        } catch (error) {
+            console.error('Error during sign-out:', error);
+        }
     };
 
     return (

@@ -3,17 +3,21 @@ import React, { useEffect, useState } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import StarReview from "../components/StarHelper.jsx";
 import { API_BASE_URL } from '../utils/api';
+import { getCurrentUsername } from '../utils/auth';
 
 const ProfilePage = () => {
     const { username } = useParams(); // Get the username from the URL
     const [reviews, setReviews] = useState([]);
     const [error, setError] = useState('');
+    const currentUser = getCurrentUsername();
 
     useEffect(() => {
         const fetchUserReviews = async () => {
-            const userToFetch = username || localStorage.getItem('username'); // Fallback to signed-in user
+            const userToFetch = username || currentUser; // Use current user if no username in URL
             try {
-                const response = await fetch(`${API_BASE_URL}/api/profile/${userToFetch}`);
+                const response = await fetch(`${API_BASE_URL}/api/profile/${userToFetch}`, {
+                    credentials: 'include',
+                });
                 if (!response.ok) {
                     throw new Error('Failed to fetch user reviews');
                 }
@@ -25,9 +29,25 @@ const ProfilePage = () => {
         };
 
         fetchUserReviews();
-    }, [username]);
+    }, [username, currentUser]);
 
-
+    const handleDelete = async (reviewId) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/reviews/${reviewId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                setReviews((prevReviews) =>
+                    prevReviews.filter((review) => review.id !== reviewId)
+                );
+            } else {
+                throw new Error('Failed to delete review');
+            }
+        } catch (err) {
+            console.error('Error deleting review:', err);
+        }
+    };
 
 
     return (
@@ -41,7 +61,7 @@ const ProfilePage = () => {
                         <div className="row">
                             <div className="col-12 mt-4 mb-4 p-3 bg-white rounded shadow-sm">
                                 <h2 className="text-center">
-                                    {username || localStorage.getItem('username')}
+                                    {username || currentUser}
                                     &#39;s Bookshelf
                                 </h2>
                             </div>
@@ -84,6 +104,14 @@ const ProfilePage = () => {
                                         <p className="review" style={{ textIndent: '3em' }}>
                                             {review.comment}
                                         </p>
+                                        {currentUser === review.username && (
+                                            <button
+                                                className="btn btn-danger mt-2"
+                                                onClick={() => handleDelete(review.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))

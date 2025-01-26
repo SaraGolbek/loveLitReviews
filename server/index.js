@@ -20,13 +20,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'https://lovelitreviews.onrender.com',
+    credentials: true,
+}));
+
 app.use(express.json());
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 // Helper Functions
 const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = req.cookies.token;
     if (!token) return res.sendStatus(401);
 
     jwt.verify(token, process.env.VITE_SECRET_KEY, (err, user) => {
@@ -35,6 +41,7 @@ const authenticateToken = (req, res, next) => {
         next();
     });
 };
+
 
 // Routes
 app.post('/api/signup', async (req, res) => {
@@ -55,25 +62,27 @@ app.post('/api/signup', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
+    const user = await pool.query(`SELECT * FROM users WHERE username = $1`, [username]);
 
-    try {
-        const result = await pool.query(`SELECT * FROM users WHERE username = $1`, [username]);
-        const user = result.rows[0];
-
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ error: 'Invalid username or password' });
-        }
-
-        const token = jwt.sign({ username: user.username }, process.env.VITE_SECRET_KEY, { expiresIn: '1h' });
-        res.json({ token });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+    if (!user.rows.length || !await bcrypt.compare(password, user.rows[0].password)) {
+        return res.status(401).json({ error: 'Invalid username or password' });
     }
+
+    const token = jwt.sign({ username: user.rows[0].username }, process.env.VITE_SECRET_KEY, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
+    res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'Strict' });
+    res.json({ message: 'Login successful' });
 });
+
 
 app.get('/api/authenticated', authenticateToken, (req, res) => {
     res.json({ authenticated: true, username: req.user.username });
+});
+
+app.post('/api/logout', (req, res) => {
+    res.clearCookie('token');
+    res.clearCookie('username');
+    res.json({ message: 'Logged out successfully' });
 });
 
 app.get('/api/books/:id', async (req, res) => {

@@ -4,20 +4,23 @@ export const checkAuthenticated = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/authenticated`, {
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
+            credentials: 'include',
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error('Not authenticated');
 
         const data = await response.json();
-        return data.authenticated;
+        return { authenticated: data.authenticated, username: data.username };
     } catch (error) {
         console.error('Error checking authentication:', error);
-        return false;
+        return { authenticated: false, username: null };
     }
 };
+
+export const getCurrentUsername = () => {
+    const match = document.cookie.match(/username=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : null;
+};
+
+
 

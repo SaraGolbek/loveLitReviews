@@ -3,33 +3,51 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { checkAuthenticated } from '../utils/auth';
+import { API_BASE_URL } from '../utils/api';
 
 
 const Layout = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
         const authenticate = async () => {
-            try {
-                const isAuthenticated = await checkAuthenticated();
+            setLoading(true);
+            const { authenticated, username } = await checkAuthenticated();
 
-                if (!isAuthenticated && location.pathname !== '/login') {
-                    navigate('/login');
-                } else {
-                    setAuthenticated(isAuthenticated);
-                }
-            } catch (error) {
-                console.error('Error checking authentication:', error);
-            } finally {
-                setLoading(false); // Ensure loading is set to false
+            if (!authenticated) {
+                navigate('/login');
+            } else {
+                setAuthenticated(true);
+                setCurrentUser(username); // Store the username in the state
             }
+
+            setLoading(false);
         };
 
         authenticate();
-    }, [location.pathname, navigate]);
+    }, [navigate, location]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    const handleLogout = async () => {
+        try {
+            await fetch(`${API_BASE_URL}/api/logout`, {
+                method: 'POST',
+                credentials: 'include',
+            });
+            setAuthenticated(false);
+            setCurrentUser(null); // Clear the current username
+            window.location.replace('/login');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    };
 
 
     return (
@@ -47,19 +65,20 @@ const Layout = () => {
                             {authenticated ? (
                                 <ul className="navbar-nav">
                                     <li><Link to="/" className="nav-link">Home</Link></li>
-                                    <li><Link className="nav-link" to={`/profile/${localStorage.getItem('username')}`}>
+                                    <li><Link className="nav-link" to={`/profile/${currentUser}`}>
                                         Profile
                                     </Link></li>
-                                    <li><Link
-                                        to="/login"
-                                        className="nav-link"
-                                        onClick={() => {
-                                            setAuthenticated(false);
-                                            localStorage.removeItem('token');
-                                        }}
-                                    >
-                                        Sign Out
-                                    </Link></li>
+                                    <li>
+                                        <Link
+                                            to="/login"
+                                            className="nav-link"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleLogout();
+                                            }}
+                                            >Log Out
+                                        </Link>
+                                    </li>
                                 </ul>
                             ) : (
                                 <ul className="navbar-nav">
