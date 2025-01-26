@@ -15,6 +15,7 @@ const ProfilePage = () => {
         const fetchUserReviews = async () => {
             const userToFetch = username || currentUser;
             console.log('Current User:', currentUser);
+            console.log('Extracted username from cookies:', getCurrentUsername());
             try {
                 const response = await fetch(`${API_BASE_URL}/api/profile/${userToFetch}`, {
                     credentials: 'include',

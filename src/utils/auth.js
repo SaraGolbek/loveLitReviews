@@ -29,7 +29,6 @@ export const checkAuthenticated = async () => {
 
 
 export const getCurrentUsername = () => {
-    console.log('Extracted username from cookies:', getCurrentUsername());
     const match = document.cookie.match(/username=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
 };
