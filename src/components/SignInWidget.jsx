@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/login.scss"
 import PropTypes from "prop-types";
 import { API_BASE_URL } from '../utils/api';
@@ -7,6 +8,7 @@ const SignInWidget = ({ onSignInClick}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,7 +28,7 @@ const SignInWidget = ({ onSignInClick}) => {
 
             console.log('Login successful. Redirecting...');
             console.log(document.cookie);
-            window.location.replace('/');
+            navigate('/');
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Could not log in. Please check your credentials.');
