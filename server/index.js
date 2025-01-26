@@ -6,6 +6,7 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
+
 dotenv.config();
 
 const { Pool } = pg;
@@ -18,6 +19,7 @@ const pool = new Pool({
 });
 
 const app = express();
+app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -27,7 +29,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(cookieParser());
+
 
 
 // Helper Functions
