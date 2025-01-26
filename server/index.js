@@ -78,8 +78,8 @@ app.post('/api/login', async (req, res) => {
     console.log('User found:', user.rows[0]);
 
     // Set cookies
-    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'lax' });
-    res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'lax' });
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'lax', path: '/'  });
+    res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'lax', path: '/'  });
 
     // Log cookies set in response
     console.log('Cookies set in response:');
