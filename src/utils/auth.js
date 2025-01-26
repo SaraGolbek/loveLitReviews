@@ -1,8 +1,13 @@
-import { API_BASE_URL } from '../utils/api';
+import { API_BASE_URL } from './api.js';
 
 export const checkAuthenticated = async () => {
     try {
         console.log('Sending request to check authentication...');
+        console.log('Request headers:', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
         const response = await fetch(`${API_BASE_URL}/api/authenticated`, {
             method: 'GET',
             credentials: 'include',
