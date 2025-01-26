@@ -111,10 +111,11 @@ app.get('/api/authenticated', (req, res) => {
 
 
 app.post('/api/logout', (req, res) => {
-    res.clearCookie('token');
-    res.clearCookie('username');
+    res.clearCookie('token', { path: '/' });
+    res.clearCookie('username', { path: '/' });
     res.json({ message: 'Logged out successfully' });
 });
+
 
 app.get('/api/books/:id', async (req, res) => {
     const { id } = req.params;

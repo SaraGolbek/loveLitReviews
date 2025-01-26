@@ -52,7 +52,7 @@ const Layout = () => {
             });
             setAuthenticated(false);
             setCurrentUser(null); // Clear the current username
-            window.location.replace('/login');
+            navigate('/login'); // Use React Router navigation
         } catch (error) {
             console.error('Error logging out:', error);
         }
