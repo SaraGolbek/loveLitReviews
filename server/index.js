@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -26,7 +27,6 @@ app.use(cors({
 }));
 
 app.use(express.json());
-const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 
