@@ -114,10 +114,19 @@ app.get('/api/authenticated', (req, res) => {
 
 
 app.post('/api/logout', (req, res) => {
-    res.clearCookie('token', { path: '/' });
-    res.clearCookie('username', { path: '/' });
+    res.clearCookie('token', {
+        path: '/',
+        sameSite: 'None',
+        secure: true,
+    });
+    res.clearCookie('username', {
+        path: '/',
+        sameSite: 'None',
+        secure: true,
+    });
     res.json({ message: 'Logged out successfully' });
 });
+
 
 
 app.get('/api/books/:id', async (req, res) => {
