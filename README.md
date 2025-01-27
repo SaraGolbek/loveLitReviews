@@ -58,10 +58,6 @@ LoveLitReviews is a social media site designed for book lovers to share, rate, a
 - `PG_PASSWORD`
 - `DATABASE_URL`
 
-## Known Issues
-1. **Logout Issue:** Some cookies are not cleared properly during logout. Fix in progress.
-2. **Refresh Issue:** Refreshing a page sometimes causes 401 errors due to cookie mismanagement. Fix in progress.
-
 ## Future Enhancements
 - **Profile Features:** Add additional customization for user profiles.
 - **Advanced Analytics:** Include metrics for popular books and reviews.
