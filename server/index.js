@@ -184,6 +184,25 @@ app.get('/api/reviews', async (req, res) => {
     }
 });
 
+app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM reviews WHERE id = $1 AND username = $2',
+            [id, req.user.username]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Review not found or not authorized' });
+        }
+
+        res.status(200).json({ message: 'Review deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 app.get('/api/profile/:username', (req, res) => {
     const token = req.cookies?.token;
