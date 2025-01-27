@@ -62,39 +62,41 @@ const Layout = () => {
     return (
         <React.Fragment>
             <div className="d-flex flex-column min-vh-100">
-                <nav className="navbar sticky-top navbar-light bg-white">
+                <nav className="navbar navbar-light bg-white">
                     <div className="container-fluid">
                         <p className="navbar-brand h3">
                             L<i className="fa-regular fa-heart fa-xs"></i>veLitReviews
                         </p>
-                        <div className="justify-content-end" id="navbarNav">
-                            {authenticated ? (
-                                <ul className="navbar-nav">
-                                    <li><Link to="/" className="nav-link">Home</Link></li>
-                                    <li><Link className="nav-link" to={`/profile/${currentUser}`}>
-                                        Profile
-                                    </Link></li>
-                                    <li>
-                                        <Link
-                                            to="/login"
-                                            className="nav-link"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleLogout();
-                                            }}
-                                            >Log Out
-                                        </Link>
-                                    </li>
-                                </ul>
-                            ) : (
-                                <ul className="navbar-nav">
-                                <li><Link to="/login" className="nav-link">Sign In</Link></li>
-                                </ul>
-                            )}
-                        </div>
+                        {authenticated ? (
+                            <ul className="navbar-nav d-flex flex-row">
+                                <li className="nav-item">
+                                    <Link to="/" className="nav-link px-3">Home</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={`/profile/${currentUser}`} className="nav-link px-3">Profile</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        to="/login"
+                                        className="nav-link px-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleLogout();
+                                        }}
+                                    >
+                                        Log Out
+                                    </Link>
+                                </li>
+                            </ul>
+                        ) : (
+                            <ul className="navbar-nav d-flex flex-row">
+                                <li className="nav-item">
+                                    <Link to="/login" className="nav-link px-3">Sign In</Link>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </nav>
-
 
                 <div className="container-fluid bg-light w-100 body flex-grow-1">
                     <Outlet />
