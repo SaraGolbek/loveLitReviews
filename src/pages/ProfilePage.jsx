@@ -1,39 +1,37 @@
 // profile.jsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import StarReview from "../components/StarHelper.jsx";
 import { API_BASE_URL } from '../utils/api';
-import { getCurrentUsername } from '../utils/auth';
 
 const ProfilePage = () => {
     const { username } = useParams(); // Get the username from the URL
     const [reviews, setReviews] = useState([]);
-    const [error, setError] = useState('');
-    const currentUser = getCurrentUsername();
+    const [isCurrentUser, setIsCurrentUser] = useState(false);
+
 
     useEffect(() => {
         const fetchUserReviews = async () => {
-            const userToFetch = username || currentUser;
-            console.log('Current User:', currentUser);
-            console.log('Extracted username from cookies:', getCurrentUsername());
-            console.log('Browser cookies:', document.cookie);
-
             try {
-                const response = await fetch(`${API_BASE_URL}/api/profile/${userToFetch}`, {
+                const response = await fetch(`${API_BASE_URL}/api/profile/${username}`, {
                     credentials: 'include',
                 });
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch user reviews');
                 }
+
                 const data = await response.json();
                 setReviews(data.reviews || []);
+                setIsCurrentUser(data.isCurrentUser); // Set isCurrentUser from the response
             } catch (err) {
                 setError(err.message);
             }
         };
 
         fetchUserReviews();
-    }, [username, currentUser]);
+    }, [username]);
+
 
     const handleDelete = async (reviewId) => {
         try {
@@ -108,7 +106,7 @@ const ProfilePage = () => {
                                         <p className="review" style={{ textIndent: '3em' }}>
                                             {review.comment}
                                         </p>
-                                        {currentUser === review.username && (
+                                        {isCurrentUser && (
                                             <button
                                                 className="btn btn-danger mt-2"
                                                 onClick={() => handleDelete(review.id)}

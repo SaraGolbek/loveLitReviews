@@ -28,10 +28,5 @@ export const checkAuthenticated = async () => {
 };
 
 
-export const getCurrentUsername = () => {
-    const match = document.cookie.match(/username=([^;]+)/);
-    return match ? decodeURIComponent(match[1]) : null;
-};
-
 
 

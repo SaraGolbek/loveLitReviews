@@ -185,17 +185,30 @@ app.get('/api/reviews', async (req, res) => {
 });
 
 
-app.get('/api/profile/:username', async (req, res) => {
-    const { username } = req.params;
-
-    try {
-        const result = await pool.query(`SELECT * FROM reviews WHERE username = $1`, [username]);
-        res.json({ reviews: result.rows });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+app.get('/api/profile/:username', (req, res) => {
+    const token = req.cookies?.token;
+    if (!token) {
+        return res.status(401).json({ error: 'Not authenticated' });
     }
+
+    jwt.verify(token, process.env.VITE_SECRET_KEY, async (err, user) => {
+        if (err) {
+            return res.status(403).json({ error: 'Token verification failed' });
+        }
+
+        const { username: requestedUsername } = req.params;
+        const isCurrentUser = user.username === requestedUsername;
+
+        try {
+            const result = await pool.query('SELECT * FROM reviews WHERE username = $1', [requestedUsername]);
+            res.json({ reviews: result.rows, isCurrentUser });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to fetch reviews' });
+        }
+    });
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
