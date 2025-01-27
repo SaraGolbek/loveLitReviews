@@ -77,7 +77,7 @@ const Home = () => {
         fetch(`${API_BASE_URL}/api/reviews`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include', // Include cookies for authentication
+            credentials: 'include',
             body: JSON.stringify(reviewData),
         })
             .then((response) => response.json())
