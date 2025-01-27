@@ -134,10 +134,9 @@ const Book = () => {
                         <div key={review.id} className="row mb-4 w-100">
                             <div className="col-12 col-lg-8 p-4 bg-white rounded shadow-sm">
                                 <h3>
-                                    {/*insert user link here after user setup
                                     <a href={`/userPage/${review.username}`}
                                     className="link-opacity-25-hover link-secondary text-decoration-none">
-                                    {review.username}'s Review</a></h3>*/}
+                                    {review.username}'s Review</a></h3>
                                     <strong>{review.username || "Anonymous"} says:</strong>
                                 </h3>
                                 <p className='mt-2 lead' style={{textIndent: "3em"}}>{review.comment}</p>
