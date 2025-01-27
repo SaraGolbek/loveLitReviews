@@ -62,15 +62,12 @@ const Layout = () => {
     return (
         <React.Fragment>
             <div className="d-flex flex-column min-vh-100">
-                <nav className="navbar navbar-expand-md sticky-top navbar-light bg-white">
+                <nav className="navbar sticky-top navbar-light bg-white">
                     <div className="container-fluid">
                         <p className="navbar-brand h3">
                             L<i className="fa-regular fa-heart fa-xs"></i>veLitReviews
                         </p>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <div className="justify-content-end" id="navbarNav">
                             {authenticated ? (
                                 <ul className="navbar-nav">
                                     <li><Link to="/" className="nav-link">Home</Link></li>
