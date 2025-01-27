@@ -5,12 +5,12 @@ import jwt from 'jsonwebtoken';
 import pg from 'pg';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 
 dotenv.config();
 
 const { Pool } = pg;
-
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
@@ -43,6 +43,9 @@ const authenticateToken = (req, res, next) => {
         next();
     });
 };
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, 'build')));
 
 
 // Routes
@@ -228,6 +231,9 @@ app.get('/api/profile/:username', (req, res) => {
     });
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
