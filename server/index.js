@@ -31,7 +31,6 @@ app.use(cors({
 app.use(express.json());
 
 
-
 // Helper Functions
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token;
@@ -49,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 
 // Routes
+// Sign Up
 app.post('/api/signup', async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,6 +65,7 @@ app.post('/api/signup', async (req, res) => {
     }
 });
 
+// Login
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await pool.query(`SELECT * FROM users WHERE username = $1`, [username]);
@@ -76,25 +77,14 @@ app.post('/api/login', async (req, res) => {
 
     const token = jwt.sign({ username: user.rows[0].username }, process.env.VITE_SECRET_KEY, { expiresIn: '1h' });
 
-    // Log for debugging
-    console.log('Generated token:', token);
-    console.log('User found:', user.rows[0]);
-
-    // Set cookies
     res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/'  });
     res.cookie('username', user.rows[0].username, { secure: true, sameSite: 'none', path: '/'  });
-
-    // Log cookies set in response
-    console.log('Cookies set in response:');
-    console.log(res.getHeaders()['set-cookie']);
 
     res.json({ message: 'Login successful' });
 });
 
-
-
+// Authenticate
 app.get('/api/authenticated', (req, res) => {
-    console.log('Cookies received:', req.cookies);
 
     const token = req.cookies?.token;
     if (!token) {
@@ -107,28 +97,19 @@ app.get('/api/authenticated', (req, res) => {
             console.log('Token verification failed:', err.message);
             return res.status(403).json({ authenticated: false, username: null });
         }
-        console.log('Token verified for user:', user.username);
+        console.log('Token verified');
         res.json({ authenticated: true, username: user.username });
     });
 });
 
-
+// Logout
 app.post('/api/logout', (req, res) => {
-    res.clearCookie('token', {
-        path: '/',
-        sameSite: 'None',
-        secure: true,
-    });
-    res.clearCookie('username', {
-        path: '/',
-        sameSite: 'None',
-        secure: true,
-    });
+    res.clearCookie('token', { path: '/', sameSite: 'None', secure: true });
+    res.clearCookie('username', { path: '/', sameSite: 'None', secure: true });
     res.json({ message: 'Logged out successfully' });
 });
 
-
-
+// Fetch Book ID
 app.get('/api/books/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -147,6 +128,7 @@ app.get('/api/books/:id', async (req, res) => {
     }
 });
 
+// Post Review
 app.post('/api/reviews', authenticateToken, async (req, res) => {
     const {
         book_id,
@@ -163,7 +145,6 @@ app.post('/api/reviews', authenticateToken, async (req, res) => {
     } = req.body;
 
     try {
-        // Upsert book information
         await pool.query(
             `INSERT INTO books (id, title, author, thumbnail, description, categories)
              VALUES ($1, $2, $3, $4, $5, $6)
@@ -171,7 +152,6 @@ app.post('/api/reviews', authenticateToken, async (req, res) => {
             [book_id, title, author, thumbnail, description, categories]
         );
 
-        // Insert review
         await pool.query(
             `INSERT INTO reviews (book_id, username, title, author, thumbnail, overall_rating, story_rating, style_rating, steam_rating, comment)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
@@ -196,6 +176,7 @@ app.get('/api/reviews', async (req, res) => {
     }
 });
 
+// Delete Review
 app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
 
@@ -216,6 +197,7 @@ app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// Fetch Specific User
 app.get('/api/profile/:username', (req, res) => {
     const token = req.cookies?.token;
     if (!token) {
