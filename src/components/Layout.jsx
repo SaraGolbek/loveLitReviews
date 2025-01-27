@@ -16,7 +16,7 @@ const Layout = () => {
     useEffect(() => {
         const authenticate = async () => {
             if (location.pathname === '/login') {
-                setLoading(false); // Skip authentication check for the login page
+                setLoading(false);
                 return;
             }
 
@@ -51,8 +51,8 @@ const Layout = () => {
                 credentials: 'include',
             });
             setAuthenticated(false);
-            setCurrentUser(null); // Clear the current username
-            navigate('/login'); // Use React Router navigation
+            setCurrentUser(null);
+            navigate('/login');
         } catch (error) {
             console.error('Error logging out:', error);
         }
